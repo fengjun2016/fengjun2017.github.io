@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>golang字符串处理 | Hexo</title>
+  <title>golang字符串时间戳转换成time.Time类型 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+  <meta name="description" content="时间转换的原理是: 将原先的字符串时间戳转换为int64位, 再使用time.Unix(v, 0)转换成time类型的时间戳  需要相关使用的函数有: unix64, _ := strconv.ParseInt(unixStr, 10, 64) time.Unix(v, 0)  代码示例:123var startTime time.TimestartTimeInt64, _ := strconv.">
 <meta name="keywords" content="goalng">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang字符串处理">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/golang字符串处理/index.html">
+<meta property="og:title" content="golang字符串时间戳转换成time.Time类型">
+<meta property="og:url" content="http://yoursite.com/2019/05/06/golang字符串时间戳转换成time.Time类型/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta property="og:description" content="时间转换的原理是: 将原先的字符串时间戳转换为int64位, 再使用time.Unix(v, 0)转换成time类型的时间戳  需要相关使用的函数有: unix64, _ := strconv.ParseInt(unixStr, 10, 64) time.Unix(v, 0)  代码示例:123var startTime time.TimestartTimeInt64, _ := strconv.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-06T07:21:49.157Z">
+<meta property="og:updated_time" content="2019-05-06T07:21:05.302Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang字符串处理">
-<meta name="twitter:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta name="twitter:title" content="golang字符串时间戳转换成time.Time类型">
+<meta name="twitter:description" content="时间转换的原理是: 将原先的字符串时间戳转换为int64位, 再使用time.Unix(v, 0)转换成time类型的时间戳  需要相关使用的函数有: unix64, _ := strconv.ParseInt(unixStr, 10, 64) time.Unix(v, 0)  代码示例:123var startTime time.TimestartTimeInt64, _ := strconv.">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,29 +147,34 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-golang字符串处理" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-golang字符串时间戳转换成time.Time类型" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      golang字符串处理
+      golang字符串时间戳转换成time.Time类型
     </h1>
   
 
         
-        <a href="/2019/05/06/golang字符串处理/" class="archive-article-date">
-  	<time datetime="2019-05-06T06:12:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" class="archive-article-date">
+  	<time datetime="2019-05-06T07:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="关于golang中字符串处理相关注意事项"><a href="#关于golang中字符串处理相关注意事项" class="headerlink" title="关于golang中字符串处理相关注意事项"></a>关于golang中字符串处理相关注意事项</h4><blockquote>
-<p>len(str) 获得是该字符串的字节数<br>中文字符占3个字节 英文字母占一个字节<br>如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换</p>
+        <h4 id="时间转换的原理是"><a href="#时间转换的原理是" class="headerlink" title="时间转换的原理是:"></a>时间转换的原理是:</h4><blockquote>
+<p>将原先的字符串时间戳转换为int64位, 再使用time.Unix(v, 0)转换成time类型的时间戳</p>
 </blockquote>
+<h4 id="需要相关使用的函数有"><a href="#需要相关使用的函数有" class="headerlink" title="需要相关使用的函数有:"></a>需要相关使用的函数有:</h4><ul>
+<li>unix64, _ := strconv.ParseInt(unixStr, 10, 64)</li>
+<li>time.Unix(v, 0)</li>
+</ul>
+<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例:"></a>代码示例:</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> startTime time.Time</span><br><span class="line">startTimeInt64, _ := strconv.ParseInt(start, <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">startTime = time.Unix(startTimeInt64, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 
       
 
@@ -260,7 +265,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang字符串处理/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang字符串时间戳转换成time.Time类型/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +279,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/06/golang string/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          golang字符串时间戳转换成time.Time类型
+          golang 字符串处理
         
       </div>
     </a>
   
   
-    <a href="/2019/05/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/05/06/golang字符串处理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">golang字符串处理</div>
       <i class="icon-circle-right"></i>
     </a>
   

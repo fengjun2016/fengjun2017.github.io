@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>golang字符串处理 | Hexo</title>
+  <title>golang 中关于数组的相关特性 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+  <meta name="description" content="golang 中关于数组的相关特性 值类型   作为参数传递时 不能修改其值 只是一种拷贝 而且还需要特别注意的就是 不同长度的数组类型不一样  123456789101112131415package main import (	&quot;fmt&quot;)func print(arr [3]int) &amp;#123;	arr[0] = 100&amp;#125;func main() &amp;#123;	arr1 := [3]">
 <meta name="keywords" content="goalng">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang字符串处理">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/golang字符串处理/index.html">
+<meta property="og:title" content="golang 中关于数组的相关特性">
+<meta property="og:url" content="http://yoursite.com/2019/05/06/golang array/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta property="og:description" content="golang 中关于数组的相关特性 值类型   作为参数传递时 不能修改其值 只是一种拷贝 而且还需要特别注意的就是 不同长度的数组类型不一样  123456789101112131415package main import (	&quot;fmt&quot;)func print(arr [3]int) &amp;#123;	arr[0] = 100&amp;#125;func main() &amp;#123;	arr1 := [3]">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-06T07:21:49.157Z">
+<meta property="og:updated_time" content="2019-05-06T07:42:59.584Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang字符串处理">
-<meta name="twitter:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta name="twitter:title" content="golang 中关于数组的相关特性">
+<meta name="twitter:description" content="golang 中关于数组的相关特性 值类型   作为参数传递时 不能修改其值 只是一种拷贝 而且还需要特别注意的就是 不同长度的数组类型不一样  123456789101112131415package main import (	&quot;fmt&quot;)func print(arr [3]int) &amp;#123;	arr[0] = 100&amp;#125;func main() &amp;#123;	arr1 := [3]">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,29 +147,38 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-golang字符串处理" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-golang array" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      golang字符串处理
+      golang 中关于数组的相关特性
     </h1>
   
 
         
-        <a href="/2019/05/06/golang字符串处理/" class="archive-article-date">
-  	<time datetime="2019-05-06T06:12:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/05/06/golang array/" class="archive-article-date">
+  	<time datetime="2019-05-06T07:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="关于golang中字符串处理相关注意事项"><a href="#关于golang中字符串处理相关注意事项" class="headerlink" title="关于golang中字符串处理相关注意事项"></a>关于golang中字符串处理相关注意事项</h4><blockquote>
-<p>len(str) 获得是该字符串的字节数<br>中文字符占3个字节 英文字母占一个字节<br>如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换</p>
+        <h4 id="golang-中关于数组的相关特性"><a href="#golang-中关于数组的相关特性" class="headerlink" title="golang 中关于数组的相关特性"></a>golang 中关于数组的相关特性</h4><ul>
+<li><p>值类型 </p>
+<blockquote>
+<p>作为参数传递时 不能修改其值 只是一种拷贝 而且还需要特别注意的就是 不同长度的数组类型不一样 </p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main </span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">print</span><span class="params">(arr [3]<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	arr[<span class="number">0</span>] = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	arr1 := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">	<span class="built_in">print</span>(arr1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//结果打印出来的应该仍然还是1，2，3</span></span><br></pre></td></tr></table></figure>
 </blockquote>
+</li>
+<li><p>如果想要改变的话 需要使用指针传递作为参数 但是常见的是使用 slice 切片 自动可以修改原来的数据</p>
+</li>
+<li><p>数组类型跟长度有关系 可以定义[…]int 让编译器自己去判断数组长度</p>
+</li>
+</ul>
 
       
 
@@ -260,7 +269,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang字符串处理/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang array/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +283,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          golang字符串时间戳转换成time.Time类型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/05/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/05/06/golang nsq/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">golang nsq实时消息处理系统源码解读一一基本介绍</div>
       <i class="icon-circle-right"></i>
     </a>
   

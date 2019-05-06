@@ -2,9 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/05/06/golang%20nsq/</loc>
+    
+    <lastmod>2019-05-06T08:02:59.348Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/05/06/golang%20mac%20etcd%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2019-05-06T07:50:25.395Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/05/06/golang%20string/</loc>
+    
+    <lastmod>2019-05-06T07:48:44.988Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/05/06/golang%20array/</loc>
+    
+    <lastmod>2019-05-06T07:42:59.584Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/05/06/golang%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/</loc>
     
-    <lastmod>2019-05-06T06:14:46.115Z</lastmod>
+    <lastmod>2019-05-06T07:21:49.157Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/05/06/golang%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2%E6%88%90time.Time%E7%B1%BB%E5%9E%8B/</loc>
+    
+    <lastmod>2019-05-06T07:21:05.302Z</lastmod>
     
   </url>
   

@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>golang字符串处理 | Hexo</title>
+  <title>golang nsq实时消息处理系统源码解读一一基本介绍 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
-<meta name="keywords" content="goalng">
+  <meta name="description" content="关于golang中nsq实时消息处理系统的背景介绍 NSQ是由知名短链接服务商bitly用Go语言开发的实时消息处理系统，具有高性能、高可靠、无视单点故障等优点，是一个非常不错的新兴的消息队列解决方案;    nsg易于配置和部署，所有参考都通过命令行指定，编译好的二进制文件，没有其它依赖项。而且支持多种消息格式。   源码下载地址">
+<meta name="keywords" content="goalng nsq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang字符串处理">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/golang字符串处理/index.html">
+<meta property="og:title" content="golang nsq实时消息处理系统源码解读一一基本介绍">
+<meta property="og:url" content="http://yoursite.com/2019/05/06/golang nsq/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta property="og:description" content="关于golang中nsq实时消息处理系统的背景介绍 NSQ是由知名短链接服务商bitly用Go语言开发的实时消息处理系统，具有高性能、高可靠、无视单点故障等优点，是一个非常不错的新兴的消息队列解决方案;    nsg易于配置和部署，所有参考都通过命令行指定，编译好的二进制文件，没有其它依赖项。而且支持多种消息格式。   源码下载地址">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-06T07:21:49.157Z">
+<meta property="og:updated_time" content="2019-05-06T08:02:59.348Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang字符串处理">
-<meta name="twitter:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta name="twitter:title" content="golang nsq实时消息处理系统源码解读一一基本介绍">
+<meta name="twitter:description" content="关于golang中nsq实时消息处理系统的背景介绍 NSQ是由知名短链接服务商bitly用Go语言开发的实时消息处理系统，具有高性能、高可靠、无视单点故障等优点，是一个非常不错的新兴的消息队列解决方案;    nsg易于配置和部署，所有参考都通过命令行指定，编译好的二进制文件，没有其它依赖项。而且支持多种消息格式。   源码下载地址">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,28 +147,34 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-golang字符串处理" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-golang nsq" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      golang字符串处理
+      golang nsq实时消息处理系统源码解读一一基本介绍
     </h1>
   
 
         
-        <a href="/2019/05/06/golang字符串处理/" class="archive-article-date">
-  	<time datetime="2019-05-06T06:12:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/05/06/golang nsq/" class="archive-article-date">
+  	<time datetime="2019-05-06T07:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="关于golang中字符串处理相关注意事项"><a href="#关于golang中字符串处理相关注意事项" class="headerlink" title="关于golang中字符串处理相关注意事项"></a>关于golang中字符串处理相关注意事项</h4><blockquote>
-<p>len(str) 获得是该字符串的字节数<br>中文字符占3个字节 英文字母占一个字节<br>如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换</p>
+        <h4 id="关于golang中nsq实时消息处理系统的背景介绍"><a href="#关于golang中nsq实时消息处理系统的背景介绍" class="headerlink" title="关于golang中nsq实时消息处理系统的背景介绍"></a>关于golang中nsq实时消息处理系统的背景介绍</h4><blockquote>
+<p>NSQ是由知名短链接服务商bitly用Go语言开发的实时消息处理系统，具有高性能、高可靠、无视单点故障等优点，是一个非常不错的新兴的消息队列解决方案; </p>
+</blockquote>
+<blockquote>
+<p>nsg易于配置和部署，所有参考都通过命令行指定，编译好的二进制文件，没有其它依赖项。而且支持多种消息格式。</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/bitly/nsq" target="_blank" rel="noopener">源码下载地址</a></p>
 </blockquote>
 
       
@@ -204,7 +210,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">goalng nsq</a>
         		</li>
       		
 		</ul>
@@ -260,7 +266,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang字符串处理/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang nsq/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +280,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/06/golang array/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          golang字符串时间戳转换成time.Time类型
+          golang 中关于数组的相关特性
         
       </div>
     </a>
   
   
-    <a href="/2019/05/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/05/06/golang mac etcd安装与使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">etcd在mac系统中的安装与使用</div>
       <i class="icon-circle-right"></i>
     </a>
   

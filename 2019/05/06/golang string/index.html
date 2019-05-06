@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>golang字符串处理 | Hexo</title>
+  <title>golang 字符串处理 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+  <meta name="description" content="字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置golang中string实现的背景介绍 golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，在utf-8编码下占3个字节，而golang默认编码正好是utf-8。   关于golang中的rune:// rune is an alias for int32 and is equi">
 <meta name="keywords" content="goalng">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang字符串处理">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/golang字符串处理/index.html">
+<meta property="og:title" content="golang 字符串处理">
+<meta property="og:url" content="http://yoursite.com/2019/05/06/golang string/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta property="og:description" content="字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置golang中string实现的背景介绍 golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，在utf-8编码下占3个字节，而golang默认编码正好是utf-8。   关于golang中的rune:// rune is an alias for int32 and is equi">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-06T07:21:49.157Z">
+<meta property="og:updated_time" content="2019-05-06T07:48:44.988Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang字符串处理">
-<meta name="twitter:description" content="关于golang中字符串处理相关注意事项 len(str) 获得是该字符串的字节数中文字符占3个字节 英文字母占一个字节如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换">
+<meta name="twitter:title" content="golang 字符串处理">
+<meta name="twitter:description" content="字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置golang中string实现的背景介绍 golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，在utf-8编码下占3个字节，而golang默认编码正好是utf-8。   关于golang中的rune:// rune is an alias for int32 and is equi">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,30 +147,51 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-golang字符串处理" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-golang string" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      golang字符串处理
+      golang 字符串处理
     </h1>
   
 
         
-        <a href="/2019/05/06/golang字符串处理/" class="archive-article-date">
-  	<time datetime="2019-05-06T06:12:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/05/06/golang string/" class="archive-article-date">
+  	<time datetime="2019-05-06T07:41:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="关于golang中字符串处理相关注意事项"><a href="#关于golang中字符串处理相关注意事项" class="headerlink" title="关于golang中字符串处理相关注意事项"></a>关于golang中字符串处理相关注意事项</h4><blockquote>
-<p>len(str) 获得是该字符串的字节数<br>中文字符占3个字节 英文字母占一个字节<br>如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换</p>
+        <h3 id="字符和字符串处理相关常见操作-特别是对于中文字符的处理以及全球不同字符的处置"><a href="#字符和字符串处理相关常见操作-特别是对于中文字符的处理以及全球不同字符的处置" class="headerlink" title="字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置"></a>字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置</h3><h4 id="golang中string实现的背景介绍"><a href="#golang中string实现的背景介绍" class="headerlink" title="golang中string实现的背景介绍"></a>golang中string实现的背景介绍</h4><blockquote>
+<p>golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，在utf-8编码下占3个字节，而golang默认编码正好是utf-8。</p>
 </blockquote>
-
+<blockquote>
+<p>关于golang中的rune:<br>// rune is an alias for int32 and is equivalent to int32 in all ways. It is<br>// used, by convention, to distinguish character values from integer values.</p>
+</blockquote>
+<p>//int32的别名，几乎在所有方面等同于int32<br>//它用来区分字符值和整数值</p>
+<p>type rune = int32</p>
+<ul>
+<li>获取字节数长度 len 特别记住这一点 len(s)返回的是底层的字节数 英文占一个字节 中文字符在golang中占有两个字节 并不是获得字符串长度</li>
+<li>关于utf-8和rune的互相转换</li>
+<li>关于含有中文字符串的对于每一个中文字符的遍历处理 强制转换该字符串变成一个[]rune数组</li>
+<li>计算字节数</li>
+<li>使用range遍历pos, rune pos会不连续</li>
+<li>使用[]byte转换获得字节</li>
+<li>使用utf8.RuneCountInStriung获得字符数量</li>
+</ul>
+<h4 id="golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于："><a href="#golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于：" class="headerlink" title="golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于："></a>golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于：</h4><blockquote>
+<ul>
+<li>byte 等同于int8，常用来处理ascii字符</li>
+<li>rune 等同于int32,常用来处理unicode或utf-8字符</li>
+</ul>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main </span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"unicode/utf8"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := <span class="string">"Yes我爱慕课网!"</span>  <span class="comment">//UTF-8编码方式 中文 可变长编码方式 英文是一字节方式 中文是3字节方式存储</span></span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	<span class="comment">//查看字符的具体存储 X打出字节的具体数字 16进制 每个字符的ascii码值</span></span><br><span class="line">	<span class="keyword">for</span> _, b := <span class="keyword">range</span> []<span class="keyword">byte</span>(s) &#123; <span class="comment">//utf-8编码</span></span><br><span class="line">		fmt.Println(<span class="string">"%X\n"</span>, b)   	</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i, ch := <span class="keyword">range</span> s &#123;  <span class="comment">//unicode编码 i是每个字符的开始字节数 ch is a rune(int32) 一个四字节的整数</span></span><br><span class="line">		fmt.Printf(<span class="string">"(%d %X)"</span>, i , ch)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"Rune count:"</span>,</span><br><span class="line">		utf8.RuneCountInString(s))   <span class="comment">//获取rune个数 也是获取字符串长度的方法之一</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//常用方法</span></span><br><span class="line">	<span class="keyword">for</span> i, ch := <span class="keyword">range</span> []<span class="keyword">rune</span>(s) &#123;  <span class="comment">//获得一个rune数组 一个下标一个英文字符或者一个中文字符 获取字符串长度方法二</span></span><br><span class="line">		fmt.Println(<span class="string">"(%d %c"</span>), i, ch)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	bytes := []bytes(s)   <span class="comment">//</span></span><br><span class="line">	<span class="keyword">for</span> <span class="built_in">len</span>(bytes) &gt; <span class="number">0</span> &#123;</span><br><span class="line">		ch, size := utf8.DecodeRune(bytes)</span><br><span class="line">		fmt.Printf(<span class="string">"(%c %v)"</span>, ch, size)</span><br><span class="line">		bytes = bytes[size:]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line">Yes我爱慕课网!</span><br><span class="line"><span class="number">59</span>	<span class="number">65</span>	<span class="number">73</span>	E6	<span class="number">88</span>	<span class="number">91</span>	E7	<span class="number">88</span>	B1	E6	<span class="number">85</span>	<span class="number">95</span>	E8	AF	BE	E7	BD	<span class="number">91</span>	<span class="number">21</span>	<span class="comment">//utf-8编码</span></span><br><span class="line">(<span class="number">0</span> <span class="number">59</span>)(<span class="number">1</span> <span class="number">65</span>)(<span class="number">2</span> <span class="number">73</span>)(<span class="number">3</span> <span class="number">6211</span>)(<span class="number">6</span> <span class="number">7231</span>)(<span class="number">9</span> <span class="number">6155</span>)(<span class="number">12</span> <span class="number">8</span>BFE)(<span class="number">15</span> <span class="number">7</span>F51)(<span class="number">18</span> <span class="number">21</span>)   <span class="comment">//unicode编码</span></span><br><span class="line">(<span class="number">0</span> Y)(<span class="number">1</span> e)(<span class="number">2</span> s)(<span class="number">3</span> 我)(<span class="number">4</span> 爱)(<span class="number">5</span> 慕)(<span class="number">6</span> 课)(<span class="number">7</span> 网)(<span class="number">8</span> !)    <span class="comment">//第几个字符是谁</span></span><br><span class="line">(Y <span class="number">1</span>)(e <span class="number">1</span>)(s <span class="number">1</span>)(我 <span class="number">3</span>)(爱 <span class="number">3</span>)(慕 <span class="number">3</span>)(课 <span class="number">3</span>)(网 <span class="number">3</span>)(! <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"unicode/utf8"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">"hello 你好"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//golang中string底层是通过byte数组实现的，座椅直接求len 实际是在按字节长度计算  所以一个汉字占3个字节算了3个长度</span></span><br><span class="line">    fmt.Println(<span class="string">"len(str):"</span>, <span class="built_in">len</span>(str))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//以下两种都可以得到str的字符串长度</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//golang中的unicode/utf8包提供了用utf-8获取长度的方法</span></span><br><span class="line">    fmt.Println(<span class="string">"RuneCountInString:"</span>, utf8.RuneCountInString(str))</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过rune类型处理unicode字符</span></span><br><span class="line">    fmt.Println(<span class="string">"rune:"</span>, <span class="built_in">len</span>([]<span class="keyword">rune</span>(str)))</span><br><span class="line">&#125;</span><br><span class="line">运行结果:</span><br><span class="line"><span class="built_in">len</span>(str): <span class="number">12</span></span><br><span class="line">RuneCountInString: <span class="number">8</span></span><br><span class="line"><span class="keyword">rune</span>: <span class="number">8</span></span><br></pre></td></tr></table></figure>
       
 
       
@@ -260,7 +281,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang字符串处理/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang string/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +295,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/06/golang mac etcd安装与使用/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          golang字符串时间戳转换成time.Time类型
+          etcd在mac系统中的安装与使用
         
       </div>
     </a>
   
   
-    <a href="/2019/05/06/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">golang字符串时间戳转换成time.Time类型</div>
       <i class="icon-circle-right"></i>
     </a>
   
