@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-06T05:10:58.498Z</updated>
+  <updated>2019-05-06T06:14:46.115Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>golang字符串处理</title>
+    <link href="http://yoursite.com/2019/05/06/golang%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86/"/>
+    <id>http://yoursite.com/2019/05/06/golang字符串处理/</id>
+    <published>2019-05-06T06:12:01.000Z</published>
+    <updated>2019-05-06T06:14:46.115Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="关于golang中字符串处理相关注意事项"><a href="#关于golang中字符串处理相关注意事项" class="headerlink" title="关于golang中字符串处理相关注意事项"></a>关于golang中字符串处理相关注意事项</h2><blockquote><p>len(str) 获得是该字符串的字节数<br>中文字符占3个字节 英文字母占一个字节<br>如果想要获得数组 一个下标一个中文字符或者英文字符的话,需要使用[]rune()来强制转换</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;关于golang中字符串处理相关注意事项&quot;&gt;&lt;a href=&quot;#关于golang中字符串处理相关注意事项&quot; class=&quot;headerlink&quot; title=&quot;关于golang中字符串处理相关注意事项&quot;&gt;&lt;/a&gt;关于golang中字符串处理相关注意事项&lt;/h2&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="goalng" scheme="http://yoursite.com/tags/goalng/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
