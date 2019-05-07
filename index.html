@@ -144,6 +144,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-golang 逃逸分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/07/golang 逃逸分析/">golang 逃逸分析</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/07/golang 逃逸分析/" class="archive-article-date">
+  	<time datetime="2019-05-07T03:19:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="golang-逃逸分析"><a href="#golang-逃逸分析" class="headerlink" title="golang 逃逸分析"></a>golang 逃逸分析</h3><h4 id="什么叫做golang的逃逸分析"><a href="#什么叫做golang的逃逸分析" class="headerlink" title="什么叫做golang的逃逸分析"></a>什么叫做golang的逃逸分析</h4><blockquote>
+<p>逃逸分析是确定指针动态范围的方法,可以分析在程序的哪些地方可以访问指针.<br>当一个变量(或对象)在子程序中被分配,一个指向变量的指针可能逃逸到其他执行线程中,或者去调用子程序.如果使用尾递归优化,对象也可能逃逸到被调用的子程序中.如果一个程序分配一个对象并返回一个该对象的指针,该对象可能在程序中的任何一个地方被访问到,这样指针就成功逃逸了.</p>
+</blockquote>
+<blockquote>
+<p>如果指针存储在全局变量或者其他数据结构中,也可能发生逃逸,这种情况是当前程序中的指针逃逸.逃逸分析需要确定指针所有可以存储的地方,保证指针的生命周期只在当前进程或线程中.</p>
+</blockquote>
+<h4 id="逃逸分析的好处"><a href="#逃逸分析的好处" class="headerlink" title="逃逸分析的好处"></a>逃逸分析的好处</h4><ul>
+<li><ol>
+<li>减少gc压力,不逃逸的对象分配在栈上,当函数返回时就回收了资源,不需要gc标记清楚</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>逃逸分析完以后可以确定哪些变量可以分配在栈上,栈的分配比堆快,性能更好</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>同步消除</li>
+</ol>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/07/golang 逃逸分析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-golang array" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | Hexo</title>
+  <title>golang 逃逸分析 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="golang 逃逸分析什么叫做golang的逃逸分析 逃逸分析是确定指针动态范围的方法,可以分析在程序的哪些地方可以访问指针.当一个变量(或对象)在子程序中被分配,一个指向变量的指针可能逃逸到其他执行线程中,或者去调用子程序.如果使用尾递归优化,对象也可能逃逸到被调用的子程序中.如果一个程序分配一个对象并返回一个该对象的指针,该对象可能在程序中的任何一个地方被访问到,这样指针就成功逃逸了.   如">
+<meta name="keywords" content="goalng">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang 逃逸分析">
+<meta property="og:url" content="http://yoursite.com/2019/05/07/golang 逃逸分析/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="golang 逃逸分析什么叫做golang的逃逸分析 逃逸分析是确定指针动态范围的方法,可以分析在程序的哪些地方可以访问指针.当一个变量(或对象)在子程序中被分配,一个指向变量的指针可能逃逸到其他执行线程中,或者去调用子程序.如果使用尾递归优化,对象也可能逃逸到被调用的子程序中.如果一个程序分配一个对象并返回一个该对象的指针,该对象可能在程序中的任何一个地方被访问到,这样指针就成功逃逸了.   如">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-07T03:36:26.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="golang 逃逸分析">
+<meta name="twitter:description" content="golang 逃逸分析什么叫做golang的逃逸分析 逃逸分析是确定指针动态范围的方法,可以分析在程序的哪些地方可以访问指针.当一个变量(或对象)在子程序中被分配,一个指向变量的指针可能逃逸到其他执行线程中,或者去调用子程序.如果使用尾递归优化,对象也可能逃逸到被调用的子程序中.如果一个程序分配一个对象并返回一个该对象的指针,该对象可能在程序中的任何一个地方被访问到,这样指针就成功逃逸了.   如">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -142,36 +147,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-golang 逃逸分析" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      golang 逃逸分析
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/07/golang 逃逸分析/" class="archive-article-date">
+
+        
+        <a href="/2019/05/07/golang 逃逸分析/" class="archive-article-date">
   	<time datetime="2019-05-07T03:19:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-07</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/07/golang 逃逸分析/">golang 逃逸分析</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="golang-逃逸分析"><a href="#golang-逃逸分析" class="headerlink" title="golang 逃逸分析"></a>golang 逃逸分析</h3><h4 id="什么叫做golang的逃逸分析"><a href="#什么叫做golang的逃逸分析" class="headerlink" title="什么叫做golang的逃逸分析"></a>什么叫做golang的逃逸分析</h4><blockquote>
+<p>逃逸分析是确定指针动态范围的方法,可以分析在程序的哪些地方可以访问指针.<br>当一个变量(或对象)在子程序中被分配,一个指向变量的指针可能逃逸到其他执行线程中,或者去调用子程序.如果使用尾递归优化,对象也可能逃逸到被调用的子程序中.如果一个程序分配一个对象并返回一个该对象的指针,该对象可能在程序中的任何一个地方被访问到,这样指针就成功逃逸了.</p>
+</blockquote>
+<blockquote>
+<p>如果指针存储在全局变量或者其他数据结构中,也可能发生逃逸,这种情况是当前程序中的指针逃逸.逃逸分析需要确定指针所有可以存储的地方,保证指针的生命周期只在当前进程或线程中.</p>
+</blockquote>
+<h4 id="逃逸分析的好处"><a href="#逃逸分析的好处" class="headerlink" title="逃逸分析的好处"></a>逃逸分析的好处</h4><ul>
+<li><ol>
+<li>减少gc压力,不逃逸的对象分配在栈上,当函数返回时就回收了资源,不需要gc标记清楚</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>逃逸分析完以后可以确定哪些变量可以分配在栈上,栈的分配比堆快,性能更好</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>同步消除</li>
+</ol>
+</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -183,274 +227,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/07/golang 逃逸分析/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/golang array/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/06/golang array/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">golang 中关于数组的相关特性</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/golang array/">golang 中关于数组的相关特性</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/golang nsq/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/golang nsq/">golang nsq实时消息处理系统源码解读一一基本介绍</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">goalng nsq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/golang mac etcd安装与使用/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:41:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/golang mac etcd安装与使用/">etcd在mac系统中的安装与使用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">goalng etcd mac</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/golang string/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:41:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/golang string/">golang 字符串处理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/golang字符串时间戳转换成time.Time类型/">golang字符串时间戳转换成time.Time类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/golang字符串处理/" class="archive-article-date">
-  	<time datetime="2019-05-06T06:12:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/golang字符串处理/">golang字符串处理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/06/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-06T05:10:58.498Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -473,8 +349,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
