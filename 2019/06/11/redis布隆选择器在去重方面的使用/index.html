@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>etcd在mac系统中的安装与使用 | Hexo</title>
+  <title>redis布隆选择器在去重方面的使用 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="etcd在mac系统中的安装与使用 进入etcd官网提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包 解压下载好的代码包 cd 进入解压后的代码包 启动server端 nohup ./etcd –listen-client-urls ‘http://0.0.0.0:2379&amp;#39; –advertise-client-urls ‘http://0">
-<meta name="keywords" content="goalng etcd mac">
+  <meta name="description" content="redis布隆选择器背景介绍: 1.使用场景：推荐系统给用户推荐新闻，避免重复推送。  需要考虑问题：从用户观看历史中筛选出没有看过的新闻进行推送，就需要数据库中频繁的使用exists进行查询，但是当用户量很大时，数据库很难顶住压力。   解决方法：  1.1.使用缓存？但是日子长了，会浪费很大空间，不是长久之计，不是很好的解决办法。    1.2.这时布隆过滤器就可以很好的解决这个需求了，可以节">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="etcd在mac系统中的安装与使用">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/golang mac etcd安装与使用/index.html">
+<meta property="og:title" content="redis布隆选择器在去重方面的使用">
+<meta property="og:url" content="http://yoursite.com/2019/06/11/redis布隆选择器在去重方面的使用/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="etcd在mac系统中的安装与使用 进入etcd官网提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包 解压下载好的代码包 cd 进入解压后的代码包 启动server端 nohup ./etcd –listen-client-urls ‘http://0.0.0.0:2379&amp;#39; –advertise-client-urls ‘http://0">
+<meta property="og:description" content="redis布隆选择器背景介绍: 1.使用场景：推荐系统给用户推荐新闻，避免重复推送。  需要考虑问题：从用户观看历史中筛选出没有看过的新闻进行推送，就需要数据库中频繁的使用exists进行查询，但是当用户量很大时，数据库很难顶住压力。   解决方法：  1.1.使用缓存？但是日子长了，会浪费很大空间，不是长久之计，不是很好的解决办法。    1.2.这时布隆过滤器就可以很好的解决这个需求了，可以节">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-06T07:50:25.395Z">
+<meta property="og:updated_time" content="2019-06-11T09:16:38.213Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="etcd在mac系统中的安装与使用">
-<meta name="twitter:description" content="etcd在mac系统中的安装与使用 进入etcd官网提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包 解压下载好的代码包 cd 进入解压后的代码包 启动server端 nohup ./etcd –listen-client-urls ‘http://0.0.0.0:2379&amp;#39; –advertise-client-urls ‘http://0">
+<meta name="twitter:title" content="redis布隆选择器在去重方面的使用">
+<meta name="twitter:description" content="redis布隆选择器背景介绍: 1.使用场景：推荐系统给用户推荐新闻，避免重复推送。  需要考虑问题：从用户观看历史中筛选出没有看过的新闻进行推送，就需要数据库中频繁的使用exists进行查询，但是当用户量很大时，数据库很难顶住压力。   解决方法：  1.1.使用缓存？但是日子长了，会浪费很大空间，不是长久之计，不是很好的解决办法。    1.2.这时布隆过滤器就可以很好的解决这个需求了，可以节">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,72 +147,108 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-golang mac etcd安装与使用" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-redis布隆选择器在去重方面的使用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      etcd在mac系统中的安装与使用
+      redis布隆选择器在去重方面的使用
     </h1>
   
 
         
-        <a href="/2019/05/06/golang mac etcd安装与使用/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:41:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/06/11/redis布隆选择器在去重方面的使用/" class="archive-article-date">
+  	<time datetime="2019-06-11T08:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="etcd在mac系统中的安装与使用"><a href="#etcd在mac系统中的安装与使用" class="headerlink" title="etcd在mac系统中的安装与使用"></a>etcd在mac系统中的安装与使用</h3><ul>
-<li>进入<a href="https://coreos.com/etcd/" target="_blank" rel="noopener">etcd官网</a>提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包</li>
-<li>解压下载好的代码包</li>
-<li>cd 进入解压后的代码包</li>
-<li>启动server端 nohup ./etcd –listen-client-urls ‘<a href="http://0.0.0.0:2379&#39;" target="_blank" rel="noopener">http://0.0.0.0:2379&#39;</a> –advertise-client-urls ‘<a href="http://0.0.0.0:2379&#39;" target="_blank" rel="noopener">http://0.0.0.0:2379&#39;</a> &amp;</li>
-<li>client客户端连接使用 </li>
-<li>ETCDCTL_API=3 ./etcdctl put “name” “fengjun”</li>
-<li>ETCDCTL_API=3 ./etcdctl get “name”</li>
-</ul>
-<h4 id="etcd特性总结"><a href="#etcd特性总结" class="headerlink" title="etcd特性总结"></a>etcd特性总结</h4><ul>
-<li>对于key前缀相同的有序排列存储在系统中</li>
-</ul>
+        <h4 id="redis布隆选择器背景介绍"><a href="#redis布隆选择器背景介绍" class="headerlink" title="redis布隆选择器背景介绍:"></a>redis布隆选择器背景介绍:</h4><ul>
+<li><p>1.使用场景：推荐系统给用户推荐新闻，避免重复推送。</p>
 <blockquote>
-<p>例如:</p>
+<p>需要考虑问题：从用户观看历史中筛选出没有看过的新闻进行推送，就需要数据库中频繁的使用exists进行查询，但是当用户量很大时，数据库很难顶住压力。</p>
+</blockquote>
+<blockquote>
+<p>解决方法：</p>
 <ul>
-<li>ETCDCTL_API=3 ./etcdctl put “/cron/jobs/job1” “{…job1}”<ul>
-<li>ETCDCTL_API=3 ./etcdctl put “/cron/jobs/job2” “{…job2}”</li>
+<li>1.1.使用缓存？但是日子长了，会浪费很大空间，不是长久之计，不是很好的解决办法。</li>
+</ul>
+</blockquote>
+<ul>
+<li>1.2.这时布隆过滤器就可以很好的解决这个需求了，可以节约90%以上的空间，缺点就是稍微有那么一点不准确，存在一定的误判率，但是对于这个新闻推送的可以忽略。</li>
 </ul>
 </li>
 </ul>
-</blockquote>
 <ul>
-<li><p>然后可以按照key前缀设置来查找集合</p>
+<li><p>2.什么布隆过滤器</p>
+<ul>
+<li><p>2.1其实布隆过滤器可以看成是一个不是很准确的set结构，只是在使用它的contains方法判断某个对象是否存在时会出现误判。但是它也不是特别的不精准，只要参数设置合理，那么它的精确度可以控制的足够精准，只会有小小的误判。</p>
+</li>
+<li><p>2.2当布隆过滤器说某个值存在时，那可能就不存在，如果说某个值不存在时，那肯定就是不存在了</p>
 <blockquote>
-<p>ETCDCTL_API=3 ./etcdctl get “/cron/jobs/“ –prefix</p>
-<ul>
-<li>/cron/jobs/job1</li>
-<li>{…job1}</li>
-<li>/cron/jobs/job2</li>
-<li>{…job2}</li>
-</ul>
+<p>打个比方，当一个人说认识你时可能不认识你，当一个人说不认识你时那肯定就不认识了。当它说见过你时，可能根本没有见过面，只不过可能你的脸和它所认识人中某个人的脸相似度比较高，所以产生误判。</p>
 </blockquote>
 </li>
-<li><p>在新开的终端会话界面使用watch命令检测 进入解压后的文件夹中</p>
-<blockquote>
-<p>ETCDCTL_API=3 ./etcdctl watch “/cron/jobs/“ –prefix</p>
-<ul>
-<li>ETCDCTL_API=3 ./etcdctl put “/cron/jobs/job2” “{…1111}” //修改</li>
-<li>新开的终端会显示:<br>PUT<br>/cron/jobs/job2<br>{…1111}</li>
+<li><p>2.3对于上面的场景，当用户看过的新闻，肯定会被过滤掉，对于没有看多的新闻，可能会过滤极少的一部分（误判），但是绝大部分都可以准确识别。这样可以完全保证推送给用户的新闻都是无重复的。</p>
+</li>
 </ul>
+</li>
+<li><p>3.需要安装新版的redis版本</p>
+<blockquote>
+<p>这里我们使用docker来安装redislabs/rebloom : docker pull redislabs/rebloom:latest</p>
 </blockquote>
 </li>
-<li><p>获取etcd golang客户端的代码 在上面打开的etcd<a href="https://github.com/etcd-io/etcd" target="_blank" rel="noopener">github项目代码</a>里面 <a href="https://github.com/etcd-io/etcd/tree/master/clientv3" target="_blank" rel="noopener">clientv3</a></p>
+<li><p>4.bloomfilter 命令使用</p>
+<ul>
+<li><p>4.1 bf.add</p>
 <blockquote>
-<p>etcd/clientv3 is the official Go etcd client for v3.<br>  golang安装客户端代码方式<br>  Install<br>  go get github.com/coreos/etcd/client  //或者使用gopm工具 或者进入golang中国下载该包 然后入项目中</p>
+<p>语法:[bf.add key options]<br>127.0.0.1&gt; bf.add users user3</p>
 </blockquote>
+<pre><code>(integer) 1
+</code></pre></li>
+<li><p>4.2 bf.exists</p>
+<blockquote>
+<p>语法:[bf.exixts key options]<br>127.0.0.1&gt; bf.exists users user3</p>
+</blockquote>
+<pre><code>(integer) 1
+</code></pre></li>
+<li><p>4.3 bf.madd</p>
+<blockquote>
+<p>语法:[bf.madd key …options]<br>127.0.0.1&gt; bf.madd users user4 user5 user6 user7</p>
+</blockquote>
+<pre><code>(integer) 1
+(integer) 1
+(integer) 1
+(integer) 1
+</code></pre></li>
+<li><p>4.4 bf.mexists</p>
+<blockquote>
+<p>语法:[bf.mexists key …options]<br>127.0.0.1&gt; bf.mexists users user4 user5 user6 user7 user8</p>
+</blockquote>
+<pre><code>(integer) 1
+(integer) 1
+(integer) 1
+(integer) 1
+(integer) 0
+</code></pre></li>
+<li><p>4.5 bf.reserve 创建Filter</p>
+<blockquote>
+<p>语法:[bf.reserve key error_rate initial_size]<br>127.0.0.1&gt; bf.reserve books 0.001 10000</p>
+</blockquote>
+<pre><code>ok
+</code></pre></li>
+</ul>
+</li>
+<li><p>5.在golang中的代码的具体实现和运用</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/gomodule/redigo/redis"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(blog *Blog)</span> <span class="title">AddUserLog</span><span class="params">(userId, blogId <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line">	_, err := cache.Do(<span class="string">"BF.ADD"</span>, <span class="string">"user-read-log-"</span>+blogId, userId)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"bloom filer add err"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(blog *Blog)</span> <span class="title">CheckIsRead</span><span class="params">(userId <span class="keyword">string</span>, blogIds []<span class="keyword">string</span>)</span> <span class="params">([]<span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line"></span><br><span class="line">	ints := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">for</span> _, blogId := <span class="keyword">range</span> blogIds &#123;</span><br><span class="line">		args := []<span class="keyword">interface</span>&#123;&#125;&#123;<span class="string">"user-read-log-"</span> + blogId&#125;</span><br><span class="line">		args = <span class="built_in">append</span>(args, userId)</span><br><span class="line">		intExists, err := redis.Int(cache.Do(<span class="string">"bf.exists"</span>, args...))</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">"debug charles intExists error arg"</span>, args)</span><br><span class="line">			intExists = <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		ints = <span class="built_in">append</span>(ints, intExists)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ints, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(blog *Blog)</span> <span class="title">DeleteBlogLogCache</span><span class="params">(blogId <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line">	_, err := cache.Do(<span class="string">"EXPIRE"</span>, <span class="string">"user-read-log-"</span>+blogId, <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"redis set expire bloom filter and err"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><ol start="6">
+<li>还有一点特别要注意的事项就是, bf只有add和exists两种类似的操作 没有删除操作 如果要是想删除改数据 则使用expire 使该key过期 例如上面演示代码里面提到的DeleteBlogCache函数的用法</li>
+</ol>
 </li>
 </ul>
 
@@ -249,7 +285,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">goalng etcd mac</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -305,7 +341,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang mac etcd安装与使用/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/11/redis布隆选择器在去重方面的使用/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -319,18 +355,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/06/golang string/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          golang 字符串处理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">golang字符串时间戳转换成time.Time类型</div>
+    <a href="/2019/06/11/gorm err不为空和记录未找到/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">gorm err不为空和记录未找到的错误区别</div>
       <i class="icon-circle-right"></i>
     </a>
   
