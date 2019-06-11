@@ -144,6 +144,95 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-本地新建仓库关联远程仓库并首次提交master" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/11/本地新建仓库关联远程仓库并首次提交master/">本地新建仓库并关联远程仓库并且首次提交master分支</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/11/本地新建仓库关联远程仓库并首次提交master/" class="archive-article-date">
+  	<time datetime="2019-06-11T07:45:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="会出现的问题-首次空的提交远程master分支报错"><a href="#会出现的问题-首次空的提交远程master分支报错" class="headerlink" title="会出现的问题 首次空的提交远程master分支报错:"></a>会出现的问题 首次空的提交远程master分支报错:</h4><blockquote>
+<p>处理方法: git commit -m “empty commit” –allow-empty</p>
+</blockquote>
+<h4 id="一般流程的情况是"><a href="#一般流程的情况是" class="headerlink" title="一般流程的情况是:"></a>一般流程的情况是:</h4><blockquote>
+<p>先配置信息</p>
+<pre><code>* git config --global user.name &quot;xxxxx&quot;
+* git config --global user.email &quot;xxxx@xx.com&quot;
+</code></pre></blockquote>
+<blockquote>
+<p>创建仓库并提交代码</p>
+<pre><code>* git init
+* git remote add origin git@github.***.com:xxxx/***.git
+* git add -A
+* git commit -am&quot;首次建立项目提交&quot;
+* git push origin -u origin master
+</code></pre></blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/11/本地新建仓库关联远程仓库并首次提交master/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-golang 逃逸分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

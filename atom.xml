@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-07T03:36:26.094Z</updated>
+  <updated>2019-06-11T07:52:54.654Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>本地新建仓库并关联远程仓库并且首次提交master分支</title>
+    <link href="http://yoursite.com/2019/06/11/%E6%9C%AC%E5%9C%B0%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93%E5%85%B3%E8%81%94%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%B9%B6%E9%A6%96%E6%AC%A1%E6%8F%90%E4%BA%A4master/"/>
+    <id>http://yoursite.com/2019/06/11/本地新建仓库关联远程仓库并首次提交master/</id>
+    <published>2019-06-11T07:45:45.000Z</published>
+    <updated>2019-06-11T07:52:54.654Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="会出现的问题-首次空的提交远程master分支报错"><a href="#会出现的问题-首次空的提交远程master分支报错" class="headerlink" title="会出现的问题 首次空的提交远程master分支报错:"></a>会出现的问题 首次空的提交远程master分支报错:</h4><blockquote><p>处理方法: git commit -m “empty commit” –allow-empty</p></blockquote><h4 id="一般流程的情况是"><a href="#一般流程的情况是" class="headerlink" title="一般流程的情况是:"></a>一般流程的情况是:</h4><blockquote><p>先配置信息</p><pre><code>* git config --global user.name &quot;xxxxx&quot;* git config --global user.email &quot;xxxx@xx.com&quot;</code></pre></blockquote><blockquote><p>创建仓库并提交代码</p><pre><code>* git init* git remote add origin git@github.***.com:xxxx/***.git* git add -A* git commit -am&quot;首次建立项目提交&quot;* git push origin -u origin master</code></pre></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;会出现的问题-首次空的提交远程master分支报错&quot;&gt;&lt;a href=&quot;#会出现的问题-首次空的提交远程master分支报错&quot; class=&quot;headerlink&quot; title=&quot;会出现的问题 首次空的提交远程master分支报错:&quot;&gt;&lt;/a&gt;会出现的问题 首次空
+      
+    
+    </summary>
+    
+    
+      <category term="git" scheme="http://yoursite.com/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>golang 逃逸分析</title>
