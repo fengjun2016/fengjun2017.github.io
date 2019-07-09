@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/07/09/golang%20es/</loc>
+    
+    <lastmod>2019-07-09T10:29:12.336Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/06/11/redis%E5%B8%83%E9%9A%86%E9%80%89%E6%8B%A9%E5%99%A8%E5%9C%A8%E5%8E%BB%E9%87%8D%E6%96%B9%E9%9D%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2019-06-11T09:16:38.213Z</lastmod>
