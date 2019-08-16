@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>gorm 嵌套子查询使用实例记录 | Hexo</title>
+  <title>golang leetcode刷题-01 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="废话不多说 直接上代码演示效果 子查询    使用 *gorm.expr 进行子查询    // 后面是等价的实际的sql语句  12db.Where(&quot;amount &amp;gt; ?&quot;, DB.Table(&quot;orders&quot;).Select(&quot;AVG(amount)&quot;).Where(&quot;state = ?&quot;, &quot;paid&quot;).QueryExpr()).Find(&amp;amp;orders)// SELECT">
-<meta name="keywords" content="golang es">
+  <meta name="description" content="leetcode 刷题 01 题目描述 golang实现 解题思路总结  题目描述 定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。  你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例: 给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + n">
+<meta name="keywords" content="golang leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gorm 嵌套子查询使用实例记录">
-<meta property="og:url" content="http://yoursite.com/2019/08/16/gorm 嵌套子查询/index.html">
+<meta property="og:title" content="golang leetcode刷题-01">
+<meta property="og:url" content="http://yoursite.com/2019/08/16/leetcode_1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="废话不多说 直接上代码演示效果 子查询    使用 *gorm.expr 进行子查询    // 后面是等价的实际的sql语句  12db.Where(&quot;amount &amp;gt; ?&quot;, DB.Table(&quot;orders&quot;).Select(&quot;AVG(amount)&quot;).Where(&quot;state = ?&quot;, &quot;paid&quot;).QueryExpr()).Find(&amp;amp;orders)// SELECT">
+<meta property="og:description" content="leetcode 刷题 01 题目描述 golang实现 解题思路总结  题目描述 定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。  你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例: 给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + n">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-16T09:15:25.718Z">
+<meta property="og:updated_time" content="2019-08-16T10:26:19.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gorm 嵌套子查询使用实例记录">
-<meta name="twitter:description" content="废话不多说 直接上代码演示效果 子查询    使用 *gorm.expr 进行子查询    // 后面是等价的实际的sql语句  12db.Where(&quot;amount &amp;gt; ?&quot;, DB.Table(&quot;orders&quot;).Select(&quot;AVG(amount)&quot;).Where(&quot;state = ?&quot;, &quot;paid&quot;).QueryExpr()).Find(&amp;amp;orders)// SELECT">
+<meta name="twitter:title" content="golang leetcode刷题-01">
+<meta name="twitter:description" content="leetcode 刷题 01 题目描述 golang实现 解题思路总结  题目描述 定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。  你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例: 给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + n">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,33 +147,51 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-gorm 嵌套子查询" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-leetcode_1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      gorm 嵌套子查询使用实例记录
+      golang leetcode刷题-01
     </h1>
   
 
         
-        <a href="/2019/08/16/gorm 嵌套子查询/" class="archive-article-date">
-  	<time datetime="2019-08-16T09:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
+        <a href="/2019/08/16/leetcode_1/" class="archive-article-date">
+  	<time datetime="2019-08-16T10:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="废话不多说-直接上代码演示效果"><a href="#废话不多说-直接上代码演示效果" class="headerlink" title="废话不多说 直接上代码演示效果"></a>废话不多说 直接上代码演示效果</h4><blockquote>
-<p>子查询<br>    使用 *gorm.expr 进行子查询<br>    // 后面是等价的实际的sql语句</p>
+        <h2 id="leetcode-刷题-01"><a href="#leetcode-刷题-01" class="headerlink" title="leetcode 刷题 01"></a>leetcode 刷题 01</h2><ul>
+<li>题目描述</li>
+<li>golang实现</li>
+<li>解题思路总结</li>
+</ul>
+<h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><blockquote>
+<p>定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
 </blockquote>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.Where(<span class="string">"amount &gt; ?"</span>, DB.Table(<span class="string">"orders"</span>).Select(<span class="string">"AVG(amount)"</span>).Where(<span class="string">"state = ?"</span>, <span class="string">"paid"</span>).QueryExpr()).Find(&amp;orders)</span><br><span class="line"><span class="comment">// SELECT * FROM "orders"  WHERE "orders"."deleted_at" IS NULL AND (amount &gt; (SELECT AVG(amount) FROM "orders"  WHERE (state = 'paid')));</span></span><br></pre></td></tr></table></figure>
+<p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
+<p>示例:</p>
+<p>给定 nums = [2, 7, 11, 15], target = 9</p>
+<p>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+<h6 id="golang-实现"><a href="#golang-实现" class="headerlink" title="golang 实现"></a>golang 实现</h6><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    intMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        com := target - nums[i]</span><br><span class="line">        <span class="keyword">if</span> _, ok := intMap[com]; ok &#123;</span><br><span class="line">            <span class="keyword">return</span> []<span class="keyword">int</span>&#123;i, intMap[com]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        intMap[nums[i]] = i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    intMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> i, vi := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        com := target - vi</span><br><span class="line">        <span class="keyword">if</span> _, ok := intMap[com]; ok &#123;</span><br><span class="line">            <span class="keyword">return</span> []<span class="keyword">int</span>&#123;i, intMap[com]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        intMap[vi] = i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="golang踩坑"><a href="#golang踩坑" class="headerlink" title="golang踩坑"></a>golang踩坑</h6><blockquote>
+<p>1.注意map 必须要是用make()来声明创造空间才能往里面写数据<br>  如果只是单纯的声明一个map变量是无法往map里面添加数据的 会报错 assign entry to nil map</p>
+</blockquote>
 <blockquote>
-<p>项目当中实际使用的场景<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(user *User)</span> <span class="title">ListUnFavor</span><span class="params">(offDisplay []<span class="keyword">string</span>, rawQuery <span class="keyword">string</span>, rawOrder <span class="keyword">string</span>, offset <span class="keyword">int</span>, limit <span class="keyword">int</span>)</span> <span class="params">(*[]User, <span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">	users := []User&#123;&#125;</span><br><span class="line">	total := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	db := app.DB.Model(user)</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(offDisplay) != <span class="number">0</span> &#123;</span><br><span class="line">		db.Where(<span class="string">"`user`.id not in (?)"</span>, offDisplay)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	db.Where(<span class="string">"`user`.id not in (?)"</span>, app.DB.Model(UserFollow&#123;&#125;).Select(<span class="string">"user_id"</span>).Where(<span class="string">"`user_follow`.user_id = ? "</span>, user.Id).QueryExpr()).</span><br><span class="line">		Preload(<span class="string">"UserPhone"</span>).Preload(<span class="string">"UserInfo"</span>)</span><br><span class="line"></span><br><span class="line">	db, err := buildWhere(rawQuery, db)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> &amp;users, total, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	db, err = buildOrder(rawOrder, db)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> &amp;users, total, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	db.Offset(offset).</span><br><span class="line">		Limit(limit).</span><br><span class="line">		Find(&amp;users).</span><br><span class="line">		Count(&amp;total)</span><br><span class="line"></span><br><span class="line">	err = db.Error</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> &amp;users, total, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.注意上面往map里面添加数据必须放在检查map里面有没有的后面 否则出现 6 [3 2 4] 就出错了</p>
 </blockquote>
+<h6 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h6><ul>
+<li>暴力破解 o(n^2)</li>
+<li>使用两次hashmap o(n) 但是浪费空间</li>
+<li>使用一次hashmap o(n) 不浪费空间</li>
+</ul>
 
       
 
@@ -208,7 +226,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">golang es</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">golang leetcode</a>
         		</li>
       		
 		</ul>
@@ -264,7 +282,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/16/gorm 嵌套子查询/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/16/leetcode_1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -278,18 +296,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/16/leetcode_1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          golang leetcode刷题-01
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/16/golang elastic search/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">golang elastic search 使用教程记录</div>
+    <a href="/2019/08/16/gorm 嵌套子查询/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">gorm 嵌套子查询使用实例记录</div>
       <i class="icon-circle-right"></i>
     </a>
   

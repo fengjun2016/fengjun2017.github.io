@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-16T09:15:25.718Z</updated>
+  <updated>2019-08-16T10:26:19.968Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>golang leetcode刷题-01</title>
+    <link href="http://yoursite.com/2019/08/16/leetcode_1/"/>
+    <id>http://yoursite.com/2019/08/16/leetcode_1/</id>
+    <published>2019-08-16T10:09:45.000Z</published>
+    <updated>2019-08-16T10:26:19.968Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="leetcode-刷题-01"><a href="#leetcode-刷题-01" class="headerlink" title="leetcode 刷题 01"></a>leetcode 刷题 01</h2><ul><li>题目描述</li><li>golang实现</li><li>解题思路总结</li></ul><h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><blockquote><p>定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p></blockquote><p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p><p>示例:</p><p>给定 nums = [2, 7, 11, 15], target = 9</p><p>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p><h6 id="golang-实现"><a href="#golang-实现" class="headerlink" title="golang 实现"></a>golang 实现</h6><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    intMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        com := target - nums[i]</span><br><span class="line">        <span class="keyword">if</span> _, ok := intMap[com]; ok &#123;</span><br><span class="line">            <span class="keyword">return</span> []<span class="keyword">int</span>&#123;i, intMap[com]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        intMap[nums[i]] = i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">    intMap := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> i, vi := <span class="keyword">range</span> nums &#123;</span><br><span class="line">        com := target - vi</span><br><span class="line">        <span class="keyword">if</span> _, ok := intMap[com]; ok &#123;</span><br><span class="line">            <span class="keyword">return</span> []<span class="keyword">int</span>&#123;i, intMap[com]&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        intMap[vi] = i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h6 id="golang踩坑"><a href="#golang踩坑" class="headerlink" title="golang踩坑"></a>golang踩坑</h6><blockquote><p>1.注意map 必须要是用make()来声明创造空间才能往里面写数据<br>  如果只是单纯的声明一个map变量是无法往map里面添加数据的 会报错 assign entry to nil map</p></blockquote><blockquote><p>2.注意上面往map里面添加数据必须放在检查map里面有没有的后面 否则出现 6 [3 2 4] 就出错了</p></blockquote><h6 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h6><ul><li>暴力破解 o(n^2)</li><li>使用两次hashmap o(n) 但是浪费空间</li><li>使用一次hashmap o(n) 不浪费空间</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;leetcode-刷题-01&quot;&gt;&lt;a href=&quot;#leetcode-刷题-01&quot; class=&quot;headerlink&quot; title=&quot;leetcode 刷题 01&quot;&gt;&lt;/a&gt;leetcode 刷题 01&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;题目描述&lt;/li&gt;
+&lt;li&gt;go
+      
+    
+    </summary>
+    
+    
+      <category term="golang leetcode" scheme="http://yoursite.com/tags/golang-leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>gorm 嵌套子查询使用实例记录</title>
