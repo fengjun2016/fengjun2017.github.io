@@ -144,6 +144,315 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gorm 嵌套子查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/16/gorm 嵌套子查询/">gorm 嵌套子查询使用实例记录</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/16/gorm 嵌套子查询/" class="archive-article-date">
+  	<time datetime="2019-08-16T09:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="废话不多说-直接上代码演示效果"><a href="#废话不多说-直接上代码演示效果" class="headerlink" title="废话不多说 直接上代码演示效果"></a>废话不多说 直接上代码演示效果</h4><blockquote>
+<p>子查询<br>    使用 *gorm.expr 进行子查询<br>    // 后面是等价的实际的sql语句</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.Where(<span class="string">"amount &gt; ?"</span>, DB.Table(<span class="string">"orders"</span>).Select(<span class="string">"AVG(amount)"</span>).Where(<span class="string">"state = ?"</span>, <span class="string">"paid"</span>).QueryExpr()).Find(&amp;orders)</span><br><span class="line"><span class="comment">// SELECT * FROM "orders"  WHERE "orders"."deleted_at" IS NULL AND (amount &gt; (SELECT AVG(amount) FROM "orders"  WHERE (state = 'paid')));</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>项目当中实际使用的场景<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(user *User)</span> <span class="title">ListUnFavor</span><span class="params">(offDisplay []<span class="keyword">string</span>, rawQuery <span class="keyword">string</span>, rawOrder <span class="keyword">string</span>, offset <span class="keyword">int</span>, limit <span class="keyword">int</span>)</span> <span class="params">(*[]User, <span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">	users := []User&#123;&#125;</span><br><span class="line">	total := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	db := app.DB.Model(user)</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(offDisplay) != <span class="number">0</span> &#123;</span><br><span class="line">		db.Where(<span class="string">"`user`.id not in (?)"</span>, offDisplay)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	db.Where(<span class="string">"`user`.id not in (?)"</span>, app.DB.Model(UserFollow&#123;&#125;).Select(<span class="string">"user_id"</span>).Where(<span class="string">"`user_follow`.user_id = ? "</span>, user.Id).QueryExpr()).</span><br><span class="line">		Preload(<span class="string">"UserPhone"</span>).Preload(<span class="string">"UserInfo"</span>)</span><br><span class="line"></span><br><span class="line">	db, err := buildWhere(rawQuery, db)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> &amp;users, total, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	db, err = buildOrder(rawOrder, db)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> &amp;users, total, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	db.Offset(offset).</span><br><span class="line">		Limit(limit).</span><br><span class="line">		Find(&amp;users).</span><br><span class="line">		Count(&amp;total)</span><br><span class="line"></span><br><span class="line">	err = db.Error</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> &amp;users, total, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">golang es</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/16/gorm 嵌套子查询/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-golang elastic search" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/16/golang elastic search/">golang elastic search 使用教程记录</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/16/golang elastic search/" class="archive-article-date">
+  	<time datetime="2019-08-16T06:44:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/16/golang elastic search/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-记录一次review同事代码的bug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/16/记录一次review同事代码的bug/">记录一次同事写的关于数字金额的bug经历</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/16/记录一次review同事代码的bug/" class="archive-article-date">
+  	<time datetime="2019-08-16T06:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><blockquote>
+<p>一次偶然的机会 我跟同事两个人都提交了同一个项目的合并请求, 然后我就顺便看了一眼他的提交变化历史<br>,但是没有仔细在意,然后后面在使用支付购买商品的时候,发现0.01的价值商品竟然无法购买, 支付宝提示交易金额异常,然后就发现他代码改动有写不对, 下面展示相关代码:和其改变提交代码的历史</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p.TotalAmount = fmt.Sprintf(<span class="string">"%.2f"</span>, <span class="keyword">float64</span>(price/<span class="number">100</span>))</span><br><span class="line">p.TotalAmount = fmt.Sprintf(<span class="string">"%.2f"</span>, <span class="keyword">float64</span>(price)/<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从上面的内容可以看到 他把float64的括号移动了一个位置,然后/是整数除法 如果price是一个int类型的话, 那么且price int 型还小于100 那么就会得到一个 0.00的金额 传到支付宝支付接口, 从而会导致金额异常 所以记录这一次同事的bug 并以此为戒</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/16/记录一次review同事代码的bug/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-对从rpc获取来的数据进行反解析成结构体处理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/15/对从rpc获取来的数据进行反解析成结构体处理/">对从rpc获取来的二进制数据进行反解析成结构体进行二次处理</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/15/对从rpc获取来的数据进行反解析成结构体处理/" class="archive-article-date">
+  	<time datetime="2019-08-15T07:48:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="对从rpc里面获取的数据进一步处理-业务当中处理过字段缺省问题"><a href="#对从rpc里面获取的数据进一步处理-业务当中处理过字段缺省问题" class="headerlink" title="对从rpc里面获取的数据进一步处理 业务当中处理过字段缺省问题"></a>对从rpc里面获取的数据进一步处理 业务当中处理过字段缺省问题</h2><blockquote>
+<p>因为需要对从rpc里面获取的二进制数据解析成结构体 进行进一步的处理 所以这里需要进一步<br>  处理成自定义的结构体<br>  我在业务当中主要是由于要处理 字段是默认值 然后会被rpc在二进制流传输的过程中缺省的问题<br>  代码示例:</p>
+</blockquote>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> blog</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"blog-server/pkg/util"</span></span><br><span class="line">	<span class="string">"bytes"</span></span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"reflect"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"blog-server/model"</span></span><br><span class="line">	<span class="string">"blog-server/pkg"</span></span><br><span class="line">	<span class="string">"blog-server/rpc"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/golang/protobuf/jsonpb"</span></span><br><span class="line">	<span class="string">"github.com/ivpusic/neo"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pbMarshaler jsonpb.Marshaler</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">	pbMarshaler = jsonpb.Marshaler&#123;</span><br><span class="line">		EmitDefaults: <span class="literal">true</span>,</span><br><span class="line">		OrigName:     <span class="literal">true</span>,</span><br><span class="line">		EnumsAsInts:  <span class="literal">true</span>,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 与proto定义字段 用于反序列化 解决protoc3协议缺省字段问题</span></span><br><span class="line"><span class="keyword">type</span> RpcProduct <span class="keyword">struct</span> &#123;</span><br><span class="line">	Id           <span class="keyword">string</span> <span class="string">`json:"id"`</span></span><br><span class="line">	UserId       <span class="keyword">string</span> <span class="string">`json:"userId"`</span></span><br><span class="line">	CategoryId   <span class="keyword">string</span> <span class="string">`json:"categoryId"`</span></span><br><span class="line">	CollectionId <span class="keyword">string</span> <span class="string">`json:"collectionId"`</span></span><br><span class="line">	Title        <span class="keyword">string</span> <span class="string">`json:"title"`</span></span><br><span class="line">	Price        <span class="keyword">string</span> <span class="string">`json:"price"`</span></span><br><span class="line">	Freight      <span class="keyword">string</span> <span class="string">`json:"freight"`</span></span><br><span class="line">	Stock        <span class="keyword">string</span> <span class="string">`json:"stock"`</span></span><br><span class="line">	Cover        <span class="keyword">string</span> <span class="string">`json:"cover"`</span></span><br><span class="line">	Desc         <span class="keyword">string</span> <span class="string">`json:"desc"`</span></span><br><span class="line">	Images       <span class="keyword">string</span> <span class="string">`json:"images"`</span></span><br><span class="line">	Tags         <span class="keyword">string</span> <span class="string">`json:"tags"`</span></span><br><span class="line">	Status       <span class="keyword">string</span> <span class="string">`json:"status"`</span></span><br><span class="line">	CreatedAt    <span class="keyword">string</span> <span class="string">`json:"createdAt"`</span></span><br><span class="line">	UpdatedAt    <span class="keyword">string</span> <span class="string">`json:"updatedAt"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListMyFollowWithProducts</span><span class="params">(c *neo.Ctx)</span> <span class="params">(i <span class="keyword">int</span>, e error)</span></span> &#123;</span><br><span class="line">	blog := &amp;model.Blog&#123;&#125;</span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line">	currentUserId := c.Req.Header.Get(<span class="string">"user_id"</span>)</span><br><span class="line">	pageParam := pkg.DefaultQuery(c, <span class="string">"page"</span>, <span class="string">"-1"</span>)</span><br><span class="line">	pageSizeParam := pkg.DefaultQuery(c, <span class="string">"pageSize"</span>, <span class="string">"-1"</span>)</span><br><span class="line"></span><br><span class="line">	pageInt, err := strconv.Atoi(pageParam)</span><br><span class="line">	pageSizeInt, err := strconv.Atoi(pageSizeParam)</span><br><span class="line"></span><br><span class="line">	offset := pageInt * pageSizeInt</span><br><span class="line">	limit := pageSizeInt</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> offset &lt; <span class="number">0</span> &#123;</span><br><span class="line">		offset = <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> currentUserId == <span class="string">""</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> http.StatusBadRequest, c.Res.Json(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">			<span class="string">"total"</span>: <span class="number">0</span>,</span><br><span class="line">			<span class="string">"data"</span>:  <span class="string">""</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	rawQuery := <span class="string">"status:=:published,reviewed:=:1"</span></span><br><span class="line">	rawOrder := <span class="string">"created_at:desc"</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//rpc获取我关注的用户id集合</span></span><br><span class="line">	rpcGetFollowRes, err := rpc.GetMyFollowUsers(currentUserId)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"rpc get my follow users userId-err:"</span>, currentUserId, err)</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	followUserIds := <span class="built_in">make</span>([]<span class="keyword">string</span>, <span class="number">0</span>)</span><br><span class="line">	followUserIdsStr := <span class="string">""</span></span><br><span class="line">	<span class="keyword">for</span> _, u := <span class="keyword">range</span> rpcGetFollowRes.MyFollowUsers &#123;</span><br><span class="line">		<span class="keyword">if</span> u.UserId != <span class="string">""</span> &amp;&amp; u.UserId != currentUserId &#123;</span><br><span class="line">			followUserIds = <span class="built_in">append</span>(followUserIds, u.UserId)</span><br><span class="line">			followUserIdsStr = followUserIdsStr + <span class="string">","</span> + u.UserId</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	blogs, _, err := blog.ListForAdmin(<span class="literal">true</span>, followUserIds, rawQuery, rawOrder, <span class="number">0</span>, <span class="number">-1</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"get my follow users blog userId-err:"</span>, currentUserId, err)</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//rpc获取products</span></span><br><span class="line">	rpcGetMyFollowProductsRes, err := rpc.GetMyFollowProducts(followUserIdsStr)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"rpc get my follow products followUserIdsStr-err:"</span>, followUserIdsStr, err)</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	products := rpcGetMyFollowProductsRes.Products</span><br><span class="line"></span><br><span class="line">	<span class="comment">//rpc获取collections</span></span><br><span class="line">	rpcGetMyFollowCollectionsRes, err := rpc.GetMyFollowCollections(followUserIdsStr)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"rpc get my follow collections followUserIdsStr-err:"</span>, followUserIdsStr, err)</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	collections := rpcGetMyFollowCollectionsRes.Collections</span><br><span class="line"></span><br><span class="line">	blogsLength := <span class="built_in">len</span>(*blogs)</span><br><span class="line">	productsLength := <span class="built_in">len</span>(products)</span><br><span class="line">	collectionsLength := <span class="built_in">len</span>(collections)</span><br><span class="line"></span><br><span class="line">	timeTemplate := <span class="string">"2006-01-02T15:04:05Z07:00"</span></span><br><span class="line">	response := <span class="built_in">make</span>([]<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;, <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">for</span> _, b := <span class="keyword">range</span> *blogs &#123;</span><br><span class="line">		bRes := blogStructToMap(b)</span><br><span class="line">		UserInfo := *rpc.GetUserInfo(b.UserId)</span><br><span class="line">		UserInfo.Nick = util.BlockPhone(UserInfo.Nick)</span><br><span class="line">		bRes[<span class="string">"user"</span>] = UserInfo</span><br><span class="line">		response = <span class="built_in">append</span>(response, <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">			<span class="string">"blog"</span>:        bRes,</span><br><span class="line">			<span class="string">"craetedUnix"</span>: b.CreatedAt.Unix(),</span><br><span class="line">			<span class="string">"isThumb"</span>:     CheckIsThumb(currentUserId, b.Id),</span><br><span class="line">			<span class="string">"isStar"</span>:      CheckIsStar(currentUserId, b.Id),</span><br><span class="line">			<span class="string">"dataType"</span>:    <span class="string">"blog"</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, p := <span class="keyword">range</span> products &#123;</span><br><span class="line">		pStamp, _ := time.ParseInLocation(timeTemplate, p.CreatedAt, time.Local)</span><br><span class="line">		UserInfo := *rpc.GetUserInfo(p.UserId)</span><br><span class="line">		UserInfo.Nick = util.BlockPhone(UserInfo.Nick)</span><br><span class="line">		<span class="comment">// Unmarshal pb object</span></span><br><span class="line">		rpcProduct := RpcProduct&#123;&#125;</span><br><span class="line">		buffer := bytes.NewBuffer([]<span class="keyword">byte</span>&#123;&#125;)   <span class="comment">//关键步骤在这里</span></span><br><span class="line">		pbMarshaler.Marshal(buffer, p)</span><br><span class="line">		log.Println(<span class="string">"rpcProduct:"</span>, buffer)</span><br><span class="line">		json.Unmarshal(buffer.Bytes(), &amp;rpcProduct)</span><br><span class="line">		rpcProductMap := dealRpcResNumberDataType(rpcProduct)</span><br><span class="line">		response = <span class="built_in">append</span>(response, <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">			<span class="string">"product"</span>:     rpcProductMap,</span><br><span class="line">			<span class="string">"craetedUnix"</span>: pStamp.Unix(),</span><br><span class="line">			<span class="string">"user"</span>:        UserInfo,</span><br><span class="line">			<span class="string">"isStar"</span>:      CheckIsStar(currentUserId, p.Id),</span><br><span class="line">			<span class="string">"dataType"</span>:    <span class="string">"product"</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, c := <span class="keyword">range</span> collections &#123;</span><br><span class="line">		pStamp, _ := time.ParseInLocation(timeTemplate, c.CreatedAt, time.Local)</span><br><span class="line">		UserInfo := *rpc.GetUserInfo(c.UserId)</span><br><span class="line">		UserInfo.Nick = util.BlockPhone(UserInfo.Nick)</span><br><span class="line">		response = <span class="built_in">append</span>(response, <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">			<span class="string">"collection"</span>:  c,</span><br><span class="line">			<span class="string">"craetedUnix"</span>: pStamp.Unix(),</span><br><span class="line">			<span class="string">"user"</span>:        UserInfo,</span><br><span class="line">			<span class="string">"dataType"</span>:    <span class="string">"collection"</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	total := blogsLength + productsLength + collectionsLength</span><br><span class="line"></span><br><span class="line">	<span class="comment">//按照创建时间进行排序</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; total - <span class="number">1</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := total - <span class="number">1</span>; j &gt; i; j-- &#123;</span><br><span class="line">			<span class="keyword">if</span> response[j][<span class="string">"craetedUnix"</span>].(<span class="keyword">int64</span>) &gt; response[j<span class="number">-1</span>][<span class="string">"craetedUnix"</span>].(<span class="keyword">int64</span>) &#123;</span><br><span class="line">				temp := response[j<span class="number">-1</span>]</span><br><span class="line">				response[j<span class="number">-1</span>] = response[j]</span><br><span class="line">				response[j] = temp</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//进行分页处理</span></span><br><span class="line">	result := <span class="built_in">make</span>([]<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;, <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span> limit &gt;= <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">var</span> end <span class="keyword">int</span></span><br><span class="line">		<span class="keyword">if</span> offset+limit &lt; total &#123;</span><br><span class="line">			end = offset + limit</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			end = total</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		log.Println(<span class="string">"offset-limit:"</span>, offset, limit)</span><br><span class="line">		<span class="keyword">for</span> k := offset; k &lt; end; k++ &#123;</span><br><span class="line">			result = <span class="built_in">append</span>(result, response[k])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		result = response</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> http.StatusOK, c.Res.Json(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">		<span class="string">"total"</span>: total,</span><br><span class="line">		<span class="string">"data"</span>:  result,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">blogStructToMap</span><span class="params">(blog model.Blog)</span> <span class="title">map</span>[<span class="title">string</span>]<span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">	data := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line">	data[<span class="string">"id"</span>] = blog.Id</span><br><span class="line">	data[<span class="string">"createdAt"</span>] = blog.CreatedAt</span><br><span class="line">	data[<span class="string">"updatedAt"</span>] = blog.UpdatedAt</span><br><span class="line">	data[<span class="string">"deletedAt"</span>] = blog.DeletedAt</span><br><span class="line">	data[<span class="string">"type"</span>] = blog.Type</span><br><span class="line">	data[<span class="string">"userId"</span>] = blog.UserId</span><br><span class="line">	data[<span class="string">"title"</span>] = blog.Title</span><br><span class="line">	data[<span class="string">"summary"</span>] = blog.Summary</span><br><span class="line">	data[<span class="string">"cover"</span>] = blog.Cover</span><br><span class="line">	data[<span class="string">"content"</span>] = blog.Content</span><br><span class="line">	data[<span class="string">"thumbNum"</span>] = blog.ThumbNum</span><br><span class="line">	data[<span class="string">"starNum"</span>] = blog.StarNum</span><br><span class="line">	data[<span class="string">"location"</span>] = blog.Location</span><br><span class="line">	data[<span class="string">"status"</span>] = blog.Status</span><br><span class="line">	data[<span class="string">"from"</span>] = blog.From</span><br><span class="line">	data[<span class="string">"sourceUrl"</span>] = blog.SourceUrl</span><br><span class="line">	data[<span class="string">"sourceAuthor"</span>] = blog.SourceAuthor</span><br><span class="line">	data[<span class="string">"remark"</span>] = blog.Remark</span><br><span class="line">	data[<span class="string">"recommend"</span>] = blog.Recommend</span><br><span class="line">	data[<span class="string">"reviewed"</span>] = blog.Reviewed</span><br><span class="line">	data[<span class="string">"comments"</span>] = blog.Comments</span><br><span class="line">	data[<span class="string">"tags"</span>] = blog.Tags</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> data</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将结构体转换成map</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">structToMap</span><span class="params">(structData <span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">map</span>[<span class="title">string</span>]<span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">	data := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line">	structDataType := reflect.TypeOf(structData)</span><br><span class="line">	structDataValue := reflect.ValueOf(structData)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; structDataType.NumField(); i++ &#123;</span><br><span class="line">		data[structDataType.Field(i).Tag.Get(<span class="string">"json"</span>)] = structDataValue.Field(i).Interface()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> data</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dealRpcResNumberDataType</span><span class="params">(rpcProduct RpcProduct)</span> <span class="title">map</span>[<span class="title">string</span>]<span class="title">interface</span></span>&#123;&#125; &#123;</span><br><span class="line">	data := structToMap(rpcProduct)</span><br><span class="line">	data[<span class="string">"categoryId"</span>], _ = strconv.Atoi(data[<span class="string">"categoryId"</span>].(<span class="keyword">string</span>))</span><br><span class="line">	data[<span class="string">"collectionId"</span>], _ = strconv.Atoi(data[<span class="string">"collectionId"</span>].(<span class="keyword">string</span>))</span><br><span class="line">	data[<span class="string">"price"</span>], _ = strconv.Atoi(data[<span class="string">"price"</span>].(<span class="keyword">string</span>))</span><br><span class="line">	data[<span class="string">"freight"</span>], _ = strconv.Atoi(data[<span class="string">"freight"</span>].(<span class="keyword">string</span>))</span><br><span class="line">	data[<span class="string">"stock"</span>], _ = strconv.Atoi(data[<span class="string">"stock"</span>].(<span class="keyword">string</span>))</span><br><span class="line">	data[<span class="string">"status"</span>], _ = strconv.Atoi(data[<span class="string">"status"</span>].(<span class="keyword">string</span>))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/15/对从rpc获取来的数据进行反解析成结构体处理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-倒计时取消订单实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -192,11 +501,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; PSUBSCRIBE __keyevent@*__:expired</span><br><span class="line">Reading messages... (press Ctrl-C to quit)</span><br><span class="line">1) <span class="string">"psubscribe"</span></span><br><span class="line">2) <span class="string">"__keyevent@*__:expired"</span></span><br><span class="line">3) (<span class="built_in">integer</span>) 1</span><br><span class="line">1) <span class="string">"pmessage"</span></span><br><span class="line">2) <span class="string">"__keyevent@*__:expired"</span></span><br><span class="line">3) <span class="string">"__keyevent@0__:expired"</span></span><br><span class="line">4) <span class="string">"test"</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="golang具体代码实现"><a href="#golang具体代码实现" class="headerlink" title="golang具体代码实现"></a>golang具体代码实现</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cache</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"shop-server/app"</span></span><br><span class="line">	<span class="string">"shop-server/model"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">	<span class="string">"unsafe"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/gomodule/redigo/redis"</span></span><br><span class="line">	<span class="string">"github.com/sirupsen/logrus"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ShopOrderCountDownPrefix = <span class="string">"shopServerOrderCountDown-"</span></span><br><span class="line"><span class="keyword">var</span> orderCountDownChannelTopic = <span class="string">"__keyevent@0__:expired"</span></span><br><span class="line"><span class="keyword">var</span> orderCountDownExpiredTime = <span class="number">1800</span> <span class="comment">//单位秒 倒计时过期时间30*60 = 1800秒</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Order <span class="keyword">struct</span> &#123;</span><br><span class="line">	OrderId <span class="keyword">string</span>   <span class="comment">//订单id</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(o *Order)</span> <span class="title">CreateOrderSetCacheCountDown</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line"></span><br><span class="line">	_, err := cache.Do(<span class="string">"SETEX"</span>, ShopOrderCountDownPrefix + o.OrderId, orderCountDownExpiredTime, <span class="string">"orderCountDown"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"redis set expire order countDownExpired and err"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DealOutDateOrderId</span><span class="params">()</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line"></span><br><span class="line">	pubSubConnClient := redis.PubSubConn&#123;cache&#125;                     <span class="comment">//创建一个订阅客户端</span></span><br><span class="line">	err := pubSubConnClient.Subscribe(orderCountDownChannelTopic)   <span class="comment">//订阅频道</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		logrus.Println(<span class="string">"redis subscribe order count down topic err:"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	logrus.Debug(<span class="string">"order countDown wait....."</span>)</span><br><span class="line">	<span class="keyword">for</span> &#123;	</span><br><span class="line">		<span class="keyword">switch</span> res := pubSubConnClient.Receive().(<span class="keyword">type</span>) &#123;</span><br><span class="line">		<span class="keyword">case</span> redis.Message:</span><br><span class="line">			message := (*<span class="keyword">string</span>)(unsafe.Pointer(&amp;res.Data))</span><br><span class="line">			logrus.Debug(<span class="string">"expired message:"</span>, *message)</span><br><span class="line">			<span class="keyword">if</span> !strings.HasPrefix(*message, ShopOrderCountDownPrefix) &#123;</span><br><span class="line">				logrus.Println(<span class="string">"no expired order id *message:"</span>, *message)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">			stringArr := strings.Split(*message, <span class="string">"-"</span>)</span><br><span class="line">			outDateOrderId := stringArr[<span class="number">1</span>]</span><br><span class="line">			<span class="comment">//cancel 订单</span></span><br><span class="line">			order := model.Order&#123;&#125;</span><br><span class="line">			order.Id = outDateOrderId</span><br><span class="line">			order.Status = model.OrderStatusCancellation</span><br><span class="line">			<span class="keyword">if</span> err := order.SystemAutoCancelOrder(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">				logrus.Errorf(<span class="string">"error in sysAutoCancelOrder id-err:"</span>, outDateOrderId, err)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">case</span> error:</span><br><span class="line">			logrus.Errorf(<span class="string">"error handle..."</span>, err)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="golang具体代码实现"><a href="#golang具体代码实现" class="headerlink" title="golang具体代码实现"></a>golang具体代码实现</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cache</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"shop-server/app"</span></span><br><span class="line">	<span class="string">"shop-server/model"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">	<span class="string">"unsafe"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/gomodule/redigo/redis"</span></span><br><span class="line">	<span class="string">"github.com/sirupsen/logrus"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ShopOrderCountDownPrefix = <span class="string">"shopServerOrderCountDown-"</span></span><br><span class="line"><span class="keyword">var</span> orderCountDownChannelTopic = <span class="string">"__keyevent@0__:expired"</span></span><br><span class="line"><span class="keyword">var</span> orderCountDownExpiredTime = <span class="number">1800</span> <span class="comment">//单位秒 倒计时过期时间30*60 = 1800秒</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Order <span class="keyword">struct</span> &#123;</span><br><span class="line">	OrderId <span class="keyword">string</span>   <span class="comment">//订单id</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(o *Order)</span> <span class="title">CreateOrderSetCacheCountDown</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line"></span><br><span class="line">	_, err := cache.Do(<span class="string">"SETEX"</span>, ShopOrderCountDownPrefix + o.OrderId, orderCountDownExpiredTime, <span class="string">"orderCountDown"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"redis set expire order countDownExpired and err"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DealOutDateOrderId</span><span class="params">()</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line"></span><br><span class="line">	pubSubConnClient := redis.PubSubConn&#123;cache&#125;                     <span class="comment">//创建一个订阅客户端</span></span><br><span class="line">	err := pubSubConnClient.Subscribe(orderCountDownChannelTopic)   <span class="comment">//订阅频道</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		logrus.Println(<span class="string">"redis subscribe order count down topic err:"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	logrus.Debug(<span class="string">"order countDown wait....."</span>)</span><br><span class="line">	<span class="keyword">for</span> &#123;	</span><br><span class="line">		<span class="keyword">switch</span> res := pubSubConnClient.Receive().(<span class="keyword">type</span>) &#123;</span><br><span class="line">		<span class="keyword">case</span> redis.Message:</span><br><span class="line">			message := (*<span class="keyword">string</span>)(unsafe.Pointer(&amp;res.Data))</span><br><span class="line">			logrus.Debug(<span class="string">"expired message:"</span>, *message)</span><br><span class="line">			<span class="keyword">if</span> !strings.HasPrefix(*message, ShopOrderCountDownPrefix) &#123;</span><br><span class="line">				logrus.Println(<span class="string">"no expired order id *message:"</span>, *message)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">			stringArr := strings.Split(*message, <span class="string">"-"</span>)</span><br><span class="line">			outDateOrderId := stringArr[<span class="number">1</span>]</span><br><span class="line">			<span class="comment">//其实这里还可以检查一下订单是否真的已经支付成功</span></span><br><span class="line">			<span class="comment">//cancel 订单</span></span><br><span class="line">			order := model.Order&#123;&#125;</span><br><span class="line">			order.Id = outDateOrderId</span><br><span class="line">			order.Status = model.OrderStatusCancellation</span><br><span class="line">			<span class="keyword">if</span> err := order.SystemAutoCancelOrder(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">				logrus.Errorf(<span class="string">"error in sysAutoCancelOrder id-err:"</span>, outDateOrderId, err)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">case</span> error:</span><br><span class="line">			logrus.Errorf(<span class="string">"error handle..."</span>, err)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
-<li>因为使用命令来配置的只是存在于缓存中,当redis重启之后就会失效 所以建议采用配置文件启动redis服务 这一点要特别注意s</li>
+<li>因为使用命令来配置的只是存在于缓存中,当redis重启之后就会失效 所以建议采用配置文件启动redis服务 这一点要特别注意</li>
 </ul>
-
+<h3 id="最后开启一个golang的协程就可以了-用来一直不停的处理过期的订单id"><a href="#最后开启一个golang的协程就可以了-用来一直不停的处理过期的订单id" class="headerlink" title="最后开启一个golang的协程就可以了 用来一直不停的处理过期的订单id"></a>最后开启一个golang的协程就可以了 用来一直不停的处理过期的订单id</h3>
       
 
       
@@ -384,6 +693,12 @@
 <h4 id="使用es-服务"><a href="#使用es-服务" class="headerlink" title="使用es 服务"></a>使用es 服务</h4><p>只需要在配置中 使用 localhost:9200即可使用该服务了</p>
 <h4 id="使用es创建mapping"><a href="#使用es创建mapping" class="headerlink" title="使用es创建mapping"></a>使用es创建mapping</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mapping = <span class="string">`&#123;</span></span><br><span class="line"><span class="string">	"settings":&#123;</span></span><br><span class="line"><span class="string">		"number_of_shards": 1,  //分片数 分布式的概念 暂时还不怎么理解</span></span><br><span class="line"><span class="string">		"number_of_replicas": 0</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	"mappings":&#123;</span></span><br><span class="line"><span class="string">		"blog":&#123;</span></span><br><span class="line"><span class="string">			"properties": &#123;</span></span><br><span class="line"><span class="string">				"id": &#123;</span></span><br><span class="line"><span class="string">					"type": "keyword"</span></span><br><span class="line"><span class="string">				&#125;,</span></span><br><span class="line"><span class="string">				"title": &#123;</span></span><br><span class="line"><span class="string">					"type": "text"</span></span><br><span class="line"><span class="string">				&#125;,</span></span><br><span class="line"><span class="string">				"summary": &#123;</span></span><br><span class="line"><span class="string">					"type": "text"</span></span><br><span class="line"><span class="string">				&#125;,</span></span><br><span class="line"><span class="string">				"tags": &#123;</span></span><br><span class="line"><span class="string">					"type": "nested",   //嵌套</span></span><br><span class="line"><span class="string">					"properties": &#123;</span></span><br><span class="line"><span class="string">						"name": &#123;</span></span><br><span class="line"><span class="string">							"type": "keyword"  //keyword 表示不对name分词 必须要完全匹配才行</span></span><br><span class="line"><span class="string">						&#125;</span></span><br><span class="line"><span class="string">					&#125;</span></span><br><span class="line"><span class="string">				&#125;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string">&#125;`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ESIndexName = <span class="string">"star"</span>   <span class="comment">//索引index 代表数据库 database的概念</span></span><br><span class="line"><span class="keyword">const</span> ESTypeName = <span class="string">"blog"</span>         <span class="comment">//类型type  代表数据库 table的概念</span></span><br></pre></td></tr></table></figure>
 <h4 id="golang-使用并创建一个client"><a href="#golang-使用并创建一个client" class="headerlink" title="golang 使用并创建一个client"></a>golang 使用并创建一个client</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> app</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/olivere/elastic"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> EsClient *elastic.Client</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitElastic</span><span class="params">()</span></span> &#123;</span><br><span class="line">	host := Config.Elastic.Addr</span><br><span class="line">	fmt.Println(host)</span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line">	EsClient, err = elastic.NewClient(</span><br><span class="line">		elastic.SetURL(host),</span><br><span class="line">		elastic.SetHealthcheck(<span class="literal">false</span>),</span><br><span class="line">		elastic.SetSniff(<span class="literal">false</span>),</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"create elastic Client error"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">"create elastic Client success"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="检查并创建mapping索引"><a href="#检查并创建mapping索引" class="headerlink" title="检查并创建mapping索引"></a>检查并创建mapping索引</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//检查并创建索引</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">checkMapping</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ctx := context.Background()</span><br><span class="line">	exists, err := app.EsClient.IndexExists(ESIndexName).Do(ctx)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"es blog indexExists err"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> exists &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	_, err = app.EsClient.CreateIndex(ESIndexName).BodyString(mapping).Do(ctx)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"es createIndex err"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	log.Println(<span class="string">"create index ok"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="批量导入数据"><a href="#批量导入数据" class="headerlink" title="批量导入数据"></a>批量导入数据</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//批量导入数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ImportBlog</span><span class="params">(c *neo.Ctx)</span> <span class="params">(i <span class="keyword">int</span>, e error)</span></span> &#123;</span><br><span class="line">	checkMapping()</span><br><span class="line"></span><br><span class="line">	blog := &amp;model.Blog&#123;&#125;</span><br><span class="line">	rawQuery := <span class="string">"status:=:published,reviewed:=:1"</span></span><br><span class="line">	blogs, _, err := blog.List(rawQuery, <span class="string">""</span>, <span class="number">0</span>, <span class="number">-1</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bulk := app.EsClient.Bulk().Index(ESIndexName).Type(ESTypeName)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, b := <span class="keyword">range</span> *blogs &#123;</span><br><span class="line">		log.Println(<span class="string">"tag es add blog id:"</span>, b.Id)</span><br><span class="line">		bulk.Add(elastic.NewBulkIndexRequest().Id(b.Id).Doc(b))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	_, err = bulk.Do(context.Background())</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> http.StatusOK, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> http.StatusOK, c.Res.Text(<span class="string">"import ok"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="导入单条数据进入es"><a href="#导入单条数据进入es" class="headerlink" title="导入单条数据进入es"></a>导入单条数据进入es</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导入单条数据进入es中</span></span><br><span class="line"><span class="comment">//往es里面导入单条blog</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ImportSingleBlog</span><span class="params">(blog model.Blog)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> blog.Status == <span class="string">"published"</span> &amp;&amp; blog.Reviewed == <span class="literal">true</span> &#123;	</span><br><span class="line">		bulk := app.EsClient.Bulk().Index(ESIndexName).Type(ESTypeName)</span><br><span class="line">		bulk.Add(elastic.NewBulkIndexRequest().Id(blog.Id).Doc(blog))</span><br><span class="line">		_, err := bulk.Do(context.Background())</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Println(<span class="string">"es add single blog Do error:"</span>, err)</span><br><span class="line">			<span class="keyword">return</span> err</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		log.Println(<span class="string">"es add single blog Do Success bId:"</span>, blog.Id)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"es add single blog Do failed bId-status-reviewed:"</span>, blog.Id, blog.Status, blog.Reviewed)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除es中的某个索引数据内容"><a href="#删除es中的某个索引数据内容" class="headerlink" title="删除es中的某个索引数据内容"></a>删除es中的某个索引数据内容</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @Summary  删除blog</span></span><br><span class="line"><span class="comment">// @Tags     es</span></span><br><span class="line"><span class="comment">// @Success 200 &#123;string&#125; json ""</span></span><br><span class="line"><span class="comment">// @Router /v1/es/blogs/delete [delete]</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DeleteBlog</span><span class="params">(c *neo.Ctx)</span> <span class="params">(i <span class="keyword">int</span>, e error)</span></span> &#123;</span><br><span class="line">	_, err := app.EsClient.DeleteIndex(ESIndexName).Do(context.Background())</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> http.StatusOK, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> http.StatusOK, c.Res.Text(<span class="string">"delete ok"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除某个索引内单条es数据内容"><a href="#删除某个索引内单条es数据内容" class="headerlink" title="删除某个索引内单条es数据内容"></a>删除某个索引内单条es数据内容</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除单条blog从es中</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DeleteSingleBlog</span><span class="params">(blogId <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	_, err := app.EsClient.Delete().Index(ESIndexName).Type(ESTypeName).Id(blogId).Refresh(<span class="string">"true"</span>).Do(context.Background())</span><br><span class="line">	log.Println(<span class="string">"delete single blog from es blogId-err:"</span>, blogId, err)</span><br><span class="line">	<span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="query查询blog-嵌套以及多关键字查询"><a href="#query查询blog-嵌套以及多关键字查询" class="headerlink" title="query查询blog 嵌套以及多关键字查询"></a>query查询blog 嵌套以及多关键字查询</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">QueryBlog</span><span class="params">(c *neo.Ctx)</span> <span class="params">(i <span class="keyword">int</span>, e error)</span></span> &#123;</span><br><span class="line">	currentUserId := c.Req.Header.Get(<span class="string">"user_id"</span>)</span><br><span class="line"></span><br><span class="line">	blogResponse := <span class="built_in">make</span>([]BlogResponse, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	keyword := pkg.DefaultQuery(c, <span class="string">"key"</span>, <span class="string">""</span>)</span><br><span class="line">	log.Println(<span class="string">"es blog query key:"</span>, keyword)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> keyword == <span class="string">""</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"es blog query key is empty"</span>)</span><br><span class="line">		<span class="keyword">return</span> http.StatusOK, c.Res.Json(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">			<span class="string">"data"</span>: blogResponse,</span><br><span class="line">			<span class="string">"total"</span>: <span class="number">0</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 请求user-server rpc 存储userSearchLog</span></span><br><span class="line">	projectType := <span class="number">1</span>  <span class="comment">//代表BlogServer</span></span><br><span class="line">	searchPage := <span class="number">0</span>   <span class="comment">//代表发现页搜索入口</span></span><br><span class="line">	_, err := rpc.AddUserSearchLog(currentUserId, keyword, <span class="keyword">int64</span>(projectType), <span class="keyword">int64</span>(searchPage))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"es search tag key addUserSearchLog rpc err-userId-key"</span>, err, currentUserId, keyword)</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// search</span></span><br><span class="line">	titleQ := elastic.NewMatchQuery(<span class="string">"title"</span>, keyword).Boost(<span class="number">2</span>)</span><br><span class="line">	summaryQ := elastic.NewMatchQuery(<span class="string">"summary"</span>, keyword).Boost(<span class="number">0.5</span>)</span><br><span class="line">	tagNameQ := elastic.NewMatchQuery(<span class="string">"tags.name"</span>, keyword)</span><br><span class="line">	nestedQ := elastic.NewNestedQuery(<span class="string">"tags"</span>, tagNameQ)</span><br><span class="line">	boolQ := elastic.NewBoolQuery().Should(titleQ, summaryQ).Must(nestedQ)</span><br><span class="line"></span><br><span class="line">	res, err := app.EsClient.Search().Index(ESIndexName).Type(ESTypeName).</span><br><span class="line">		Query(boolQ).Sort(<span class="string">"createdAt"</span>, <span class="literal">false</span>).Do(context.Background())</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(<span class="string">"es query blog search error:"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> http.StatusInternalServerError, c.Res.Text(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> b model.Blog</span><br><span class="line">	<span class="keyword">for</span> _, hit := <span class="keyword">range</span> res.Hits.Hits &#123;</span><br><span class="line">		json.Unmarshal(*hit.Source, &amp;b)</span><br><span class="line">		<span class="keyword">if</span> b.Status == <span class="string">"onlyAuthorVisible"</span> &amp;&amp; b.UserId != currentUserId &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			log.Println(<span class="string">"es blog search blog-id-status-reviewed:"</span>, b.Id, b.Status, b.Reviewed)</span><br><span class="line">			blogResponse = <span class="built_in">append</span>(blogResponse, BlogResponse&#123;</span><br><span class="line">				Blog:    b,</span><br><span class="line">				User:    *rpc.GetUserInfo(b.UserId),</span><br><span class="line">				IsThumb: CheckIsThumb(currentUserId, b.Id),</span><br><span class="line">				IsStar:  CheckIsStar(currentUserId, b.Id),</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	total := <span class="built_in">len</span>(blogResponse)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> http.StatusOK, c.Res.Json(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;</span><br><span class="line">		<span class="string">"data"</span>: blogResponse,</span><br><span class="line">		<span class="string">"total"</span>: total,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
 
       
@@ -730,390 +1045,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/06/11/本地新建仓库关联远程仓库并首次提交master/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-golang 逃逸分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/07/golang 逃逸分析/">golang 逃逸分析</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/07/golang 逃逸分析/" class="archive-article-date">
-  	<time datetime="2019-05-07T03:19:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="golang-逃逸分析"><a href="#golang-逃逸分析" class="headerlink" title="golang 逃逸分析"></a>golang 逃逸分析</h3><h4 id="什么叫做golang的逃逸分析"><a href="#什么叫做golang的逃逸分析" class="headerlink" title="什么叫做golang的逃逸分析"></a>什么叫做golang的逃逸分析</h4><blockquote>
-<p>逃逸分析是确定指针动态范围的方法,可以分析在程序的哪些地方可以访问指针.<br>当一个变量(或对象)在子程序中被分配,一个指向变量的指针可能逃逸到其他执行线程中,或者去调用子程序.如果使用尾递归优化,对象也可能逃逸到被调用的子程序中.如果一个程序分配一个对象并返回一个该对象的指针,该对象可能在程序中的任何一个地方被访问到,这样指针就成功逃逸了.</p>
-</blockquote>
-<blockquote>
-<p>如果指针存储在全局变量或者其他数据结构中,也可能发生逃逸,这种情况是当前程序中的指针逃逸.逃逸分析需要确定指针所有可以存储的地方,保证指针的生命周期只在当前进程或线程中.</p>
-</blockquote>
-<h4 id="逃逸分析的好处"><a href="#逃逸分析的好处" class="headerlink" title="逃逸分析的好处"></a>逃逸分析的好处</h4><ul>
-<li><ol>
-<li>减少gc压力,不逃逸的对象分配在栈上,当函数返回时就回收了资源,不需要gc标记清楚</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>逃逸分析完以后可以确定哪些变量可以分配在栈上,栈的分配比堆快,性能更好</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>同步消除</li>
-</ol>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/07/golang 逃逸分析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-golang nsq" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/06/golang nsq/">golang nsq实时消息处理系统源码解读一一基本介绍</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/06/golang nsq/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="关于golang中nsq实时消息处理系统的背景介绍"><a href="#关于golang中nsq实时消息处理系统的背景介绍" class="headerlink" title="关于golang中nsq实时消息处理系统的背景介绍"></a>关于golang中nsq实时消息处理系统的背景介绍</h4><blockquote>
-<p>NSQ是由知名短链接服务商bitly用Go语言开发的实时消息处理系统，具有高性能、高可靠、无视单点故障等优点，是一个非常不错的新兴的消息队列解决方案; </p>
-</blockquote>
-<blockquote>
-<p>nsg易于配置和部署，所有参考都通过命令行指定，编译好的二进制文件，没有其它依赖项。而且支持多种消息格式。</p>
-</blockquote>
-<blockquote>
-<p><a href="https://github.com/bitly/nsq" target="_blank" rel="noopener">源码下载地址</a></p>
-</blockquote>
-<blockquote>
-<p>本系列文档下载的源码为0.2.27版本</p>
-</blockquote>
-<blockquote>
-<p>为了更好的理解源码,最理想的起步当然是先了解nsq的用法, 所以接下来会先讲解nsq的安装和使用</p>
-</blockquote>
-<h4 id="nsq的安装"><a href="#nsq的安装" class="headerlink" title="nsq的安装"></a>nsq的安装</h4><ul>
-<li><p>1.安装golang的环境</p>
-</li>
-<li><p>2.安装godep,在命令行执行: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com/kr/godep</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>如果使用go get安装过程中报错,可以参考另一篇文章:关于go get安装git golang项目时报错的处理办法<br>安装之后,在$GOPATH/bin目录下面就可以看到有godep 的可执行文件,记得讲$GOPATH/bin目录环境配置到系统环境变量$PATH里面,以后在命令行就可以直接输入godep命令来执行一些操作了.</p>
-</blockquote>
-<ul>
-<li><p>3.安装assert,在命令行执行:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com/bmizerany/assert</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>4.接下来开始获取nsq的代码并编译, 在命令行执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ godep get github.com/bitly/nsq/...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>注意: 后面有三个点不能少, 执行完之后在$GOPATH/bin目录下面就会看到有很多nsq打头的可执行二进制文件存在,至此安装就结束了</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">goalng nsq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/06/golang nsq/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-golang array" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/06/golang array/">golang 中关于数组的相关特性</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/06/golang array/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="golang-中关于数组的相关特性"><a href="#golang-中关于数组的相关特性" class="headerlink" title="golang 中关于数组的相关特性"></a>golang 中关于数组的相关特性</h4><ul>
-<li><p>值类型 </p>
-<blockquote>
-<p>作为参数传递时 不能修改其值 只是一种拷贝 而且还需要特别注意的就是 不同长度的数组类型不一样 </p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main </span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">print</span><span class="params">(arr [3]<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	arr[<span class="number">0</span>] = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	arr1 := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">	<span class="built_in">print</span>(arr1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//结果打印出来的应该仍然还是1，2，3</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p>如果想要改变的话 需要使用指针传递作为参数 但是常见的是使用 slice 切片 自动可以修改原来的数据</p>
-</li>
-<li><p>数组类型跟长度有关系 可以定义[…]int 让编译器自己去判断数组长度</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/06/golang array/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-golang string" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/06/golang string/">golang 字符串处理</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/06/golang string/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:41:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="字符和字符串处理相关常见操作-特别是对于中文字符的处理以及全球不同字符的处置"><a href="#字符和字符串处理相关常见操作-特别是对于中文字符的处理以及全球不同字符的处置" class="headerlink" title="字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置"></a>字符和字符串处理相关常见操作 特别是对于中文字符的处理以及全球不同字符的处置</h3><h4 id="golang中string实现的背景介绍"><a href="#golang中string实现的背景介绍" class="headerlink" title="golang中string实现的背景介绍"></a>golang中string实现的背景介绍</h4><blockquote>
-<p>golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，在utf-8编码下占3个字节，而golang默认编码正好是utf-8。</p>
-</blockquote>
-<blockquote>
-<p>关于golang中的rune:<br>// rune is an alias for int32 and is equivalent to int32 in all ways. It is<br>// used, by convention, to distinguish character values from integer values.</p>
-</blockquote>
-<p>//int32的别名，几乎在所有方面等同于int32<br>//它用来区分字符值和整数值</p>
-<p>type rune = int32</p>
-<ul>
-<li>获取字节数长度 len 特别记住这一点 len(s)返回的是底层的字节数 英文占一个字节 中文字符在golang中占有两个字节 并不是获得字符串长度</li>
-<li>关于utf-8和rune的互相转换</li>
-<li>关于含有中文字符串的对于每一个中文字符的遍历处理 强制转换该字符串变成一个[]rune数组</li>
-<li>计算字节数</li>
-<li>使用range遍历pos, rune pos会不连续</li>
-<li>使用[]byte转换获得字节</li>
-<li>使用utf8.RuneCountInStriung获得字符数量</li>
-</ul>
-<h4 id="golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于："><a href="#golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于：" class="headerlink" title="golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于："></a>golang中海油一个byte数据类型与rune相似，它们都是用来表示字符类型的变量类型。它们的不同在于：</h4><blockquote>
-<ul>
-<li>byte 等同于int8，常用来处理ascii字符</li>
-<li>rune 等同于int32,常用来处理unicode或utf-8字符</li>
-</ul>
-</blockquote>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main </span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"unicode/utf8"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := <span class="string">"Yes我爱慕课网!"</span>  <span class="comment">//UTF-8编码方式 中文 可变长编码方式 英文是一字节方式 中文是3字节方式存储</span></span><br><span class="line">	fmt.Println(s)</span><br><span class="line">	<span class="comment">//查看字符的具体存储 X打出字节的具体数字 16进制 每个字符的ascii码值</span></span><br><span class="line">	<span class="keyword">for</span> _, b := <span class="keyword">range</span> []<span class="keyword">byte</span>(s) &#123; <span class="comment">//utf-8编码</span></span><br><span class="line">		fmt.Println(<span class="string">"%X\n"</span>, b)   	</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i, ch := <span class="keyword">range</span> s &#123;  <span class="comment">//unicode编码 i是每个字符的开始字节数 ch is a rune(int32) 一个四字节的整数</span></span><br><span class="line">		fmt.Printf(<span class="string">"(%d %X)"</span>, i , ch)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"Rune count:"</span>,</span><br><span class="line">		utf8.RuneCountInString(s))   <span class="comment">//获取rune个数 也是获取字符串长度的方法之一</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//常用方法</span></span><br><span class="line">	<span class="keyword">for</span> i, ch := <span class="keyword">range</span> []<span class="keyword">rune</span>(s) &#123;  <span class="comment">//获得一个rune数组 一个下标一个英文字符或者一个中文字符 获取字符串长度方法二</span></span><br><span class="line">		fmt.Println(<span class="string">"(%d %c"</span>), i, ch)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	bytes := []bytes(s)   <span class="comment">//</span></span><br><span class="line">	<span class="keyword">for</span> <span class="built_in">len</span>(bytes) &gt; <span class="number">0</span> &#123;</span><br><span class="line">		ch, size := utf8.DecodeRune(bytes)</span><br><span class="line">		fmt.Printf(<span class="string">"(%c %v)"</span>, ch, size)</span><br><span class="line">		bytes = bytes[size:]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line">Yes我爱慕课网!</span><br><span class="line"><span class="number">59</span>	<span class="number">65</span>	<span class="number">73</span>	E6	<span class="number">88</span>	<span class="number">91</span>	E7	<span class="number">88</span>	B1	E6	<span class="number">85</span>	<span class="number">95</span>	E8	AF	BE	E7	BD	<span class="number">91</span>	<span class="number">21</span>	<span class="comment">//utf-8编码</span></span><br><span class="line">(<span class="number">0</span> <span class="number">59</span>)(<span class="number">1</span> <span class="number">65</span>)(<span class="number">2</span> <span class="number">73</span>)(<span class="number">3</span> <span class="number">6211</span>)(<span class="number">6</span> <span class="number">7231</span>)(<span class="number">9</span> <span class="number">6155</span>)(<span class="number">12</span> <span class="number">8</span>BFE)(<span class="number">15</span> <span class="number">7</span>F51)(<span class="number">18</span> <span class="number">21</span>)   <span class="comment">//unicode编码</span></span><br><span class="line">(<span class="number">0</span> Y)(<span class="number">1</span> e)(<span class="number">2</span> s)(<span class="number">3</span> 我)(<span class="number">4</span> 爱)(<span class="number">5</span> 慕)(<span class="number">6</span> 课)(<span class="number">7</span> 网)(<span class="number">8</span> !)    <span class="comment">//第几个字符是谁</span></span><br><span class="line">(Y <span class="number">1</span>)(e <span class="number">1</span>)(s <span class="number">1</span>)(我 <span class="number">3</span>)(爱 <span class="number">3</span>)(慕 <span class="number">3</span>)(课 <span class="number">3</span>)(网 <span class="number">3</span>)(! <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"unicode/utf8"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">"hello 你好"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//golang中string底层是通过byte数组实现的，座椅直接求len 实际是在按字节长度计算  所以一个汉字占3个字节算了3个长度</span></span><br><span class="line">    fmt.Println(<span class="string">"len(str):"</span>, <span class="built_in">len</span>(str))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//以下两种都可以得到str的字符串长度</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//golang中的unicode/utf8包提供了用utf-8获取长度的方法</span></span><br><span class="line">    fmt.Println(<span class="string">"RuneCountInString:"</span>, utf8.RuneCountInString(str))</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过rune类型处理unicode字符</span></span><br><span class="line">    fmt.Println(<span class="string">"rune:"</span>, <span class="built_in">len</span>([]<span class="keyword">rune</span>(str)))</span><br><span class="line">&#125;</span><br><span class="line">运行结果:</span><br><span class="line"><span class="built_in">len</span>(str): <span class="number">12</span></span><br><span class="line">RuneCountInString: <span class="number">8</span></span><br><span class="line"><span class="keyword">rune</span>: <span class="number">8</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/06/golang string/">展开全文 >></a>
         </p>
       
 
