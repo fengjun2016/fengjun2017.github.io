@@ -144,6 +144,192 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-leetcode_3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/16/leetcode_3/">golang leetcode刷题-07</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/16/leetcode_3/" class="archive-article-date">
+  	<time datetime="2019-09-16T10:20:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="leetcode-刷题-07"><a href="#leetcode-刷题-07" class="headerlink" title="leetcode 刷题 07"></a>leetcode 刷题 07</h2><ul>
+<li>题目描述</li>
+<li>golang实现</li>
+<li>解题思路总结</li>
+</ul>
+<h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><blockquote>
+<p>给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。</p>
+</blockquote>
+<p>示例 1:</p>
+<p>输入: 123<br>输出: 321<br> 示例 2:</p>
+<p>输入: -123<br>输出: -321<br>示例 3:</p>
+<p>输入: 120<br>输出: 21<br>注意:</p>
+<p>假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。</p>
+<h6 id="golang-实现"><a href="#golang-实现" class="headerlink" title="golang 实现"></a>golang 实现</h6><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reverse</span><span class="params">(x <span class="keyword">int</span>)</span> <span class="params">(num <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> x != <span class="number">0</span> &#123;</span><br><span class="line">        num = num * <span class="number">10</span>  + x % <span class="number">10</span></span><br><span class="line">        x = x/<span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    MaxInt32 := <span class="number">1</span>&lt;&lt;<span class="number">31</span> - <span class="number">1</span></span><br><span class="line">    MinInt32 := <span class="number">-1</span> &lt;&lt; <span class="number">31</span></span><br><span class="line">    <span class="keyword">if</span> num &gt; MaxInt32 || num &lt; MinInt32 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="golang踩坑"><a href="#golang踩坑" class="headerlink" title="golang踩坑"></a>golang踩坑</h6><blockquote>
+<p>无</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">golang leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/16/leetcode_3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-leetcode_2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/16/leetcode_2/">golang leetcode刷题-02</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/16/leetcode_2/" class="archive-article-date">
+  	<time datetime="2019-09-16T10:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="leetcode-刷题-02"><a href="#leetcode-刷题-02" class="headerlink" title="leetcode 刷题 02"></a>leetcode 刷题 02</h2><ul>
+<li>题目描述</li>
+<li>golang实现</li>
+<li>解题思路总结</li>
+</ul>
+<h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><blockquote>
+<p>给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。</p>
+</blockquote>
+<p>如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。</p>
+<p>您可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<p>示例：</p>
+<p>输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>输出：7 -&gt; 0 -&gt; 8<br>原因：342 + 465 = 807</p>
+<h6 id="golang-实现"><a href="#golang-实现" class="headerlink" title="golang 实现"></a>golang 实现</h6><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addTwoNumbers</span><span class="params">(l1 *ListNode, l2 *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">    result := <span class="built_in">new</span>(ListNode)</span><br><span class="line">    point := result</span><br><span class="line">    carry := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (l1 != <span class="literal">nil</span> || l2 != <span class="literal">nil</span>) &#123;</span><br><span class="line">        l1Data := <span class="number">0</span></span><br><span class="line">        l2Data := <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> l1 != <span class="literal">nil</span> &#123;</span><br><span class="line">            l1Data = l1.Val</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> l2 != <span class="literal">nil</span> &#123;</span><br><span class="line">            l2Data = l2.Val</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        sum := l1Data + l2Data + carry</span><br><span class="line">        carry = sum / <span class="number">10</span></span><br><span class="line">        </span><br><span class="line">        node := <span class="built_in">new</span>(ListNode)</span><br><span class="line">        node.Val = sum % <span class="number">10</span></span><br><span class="line">        node.Next = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//使用的是头插法</span></span><br><span class="line">        point.Next = node</span><br><span class="line">        point = point.Next <span class="comment">//移位</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> l1 != <span class="literal">nil</span> &#123;</span><br><span class="line">            l1 = l1.Next</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> l2 != <span class="literal">nil</span> &#123;</span><br><span class="line">            l2 = l2.Next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> carry == <span class="number">1</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> lastNode ListNode</span><br><span class="line">        lastNode.Val = carry</span><br><span class="line">        lastNode.Next = <span class="literal">nil</span></span><br><span class="line">        point.Next = &amp;lastNode</span><br><span class="line">        point = point.Next <span class="comment">//移位</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result.Next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="golang踩坑"><a href="#golang踩坑" class="headerlink" title="golang踩坑"></a>golang踩坑</h6><blockquote>
+<ol>
+<li>注意这里要使用一个带头指针的单链表用于操作才行 所以最后返回必须是 result.Next 头指针的下一个指针</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>由于要保持顺序和输入的顺序一致 所以要使用尾插法 来创建相加之后的链表结果</li>
+</ol>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">golang leetcode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/16/leetcode_2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcode_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -849,243 +1035,9 @@
 
 
   
-    <article id="post-redis布隆选择器在去重方面的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/11/redis布隆选择器在去重方面的使用/">redis布隆选择器在去重方面的使用</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/11/redis布隆选择器在去重方面的使用/" class="archive-article-date">
-  	<time datetime="2019-06-11T08:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="redis布隆选择器背景介绍"><a href="#redis布隆选择器背景介绍" class="headerlink" title="redis布隆选择器背景介绍:"></a>redis布隆选择器背景介绍:</h4><ul>
-<li><p>1.使用场景：推荐系统给用户推荐新闻，避免重复推送。</p>
-<blockquote>
-<p>需要考虑问题：从用户观看历史中筛选出没有看过的新闻进行推送，就需要数据库中频繁的使用exists进行查询，但是当用户量很大时，数据库很难顶住压力。</p>
-</blockquote>
-<blockquote>
-<p>解决方法：</p>
-<ul>
-<li>1.1.使用缓存？但是日子长了，会浪费很大空间，不是长久之计，不是很好的解决办法。</li>
-</ul>
-</blockquote>
-<ul>
-<li>1.2.这时布隆过滤器就可以很好的解决这个需求了，可以节约90%以上的空间，缺点就是稍微有那么一点不准确，存在一定的误判率，但是对于这个新闻推送的可以忽略。</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>2.什么布隆过滤器</p>
-<ul>
-<li><p>2.1其实布隆过滤器可以看成是一个不是很准确的set结构，只是在使用它的contains方法判断某个对象是否存在时会出现误判。但是它也不是特别的不精准，只要参数设置合理，那么它的精确度可以控制的足够精准，只会有小小的误判。</p>
-</li>
-<li><p>2.2当布隆过滤器说某个值存在时，那可能就不存在，如果说某个值不存在时，那肯定就是不存在了</p>
-<blockquote>
-<p>打个比方，当一个人说认识你时可能不认识你，当一个人说不认识你时那肯定就不认识了。当它说见过你时，可能根本没有见过面，只不过可能你的脸和它所认识人中某个人的脸相似度比较高，所以产生误判。</p>
-</blockquote>
-</li>
-<li><p>2.3对于上面的场景，当用户看过的新闻，肯定会被过滤掉，对于没有看多的新闻，可能会过滤极少的一部分（误判），但是绝大部分都可以准确识别。这样可以完全保证推送给用户的新闻都是无重复的。</p>
-</li>
-</ul>
-</li>
-<li><p>3.需要安装新版的redis版本</p>
-<blockquote>
-<p>这里我们使用docker来安装redislabs/rebloom : docker pull redislabs/rebloom:latest</p>
-</blockquote>
-</li>
-<li><p>4.bloomfilter 命令使用</p>
-<ul>
-<li><p>4.1 bf.add</p>
-<blockquote>
-<p>语法:[bf.add key options]<br>127.0.0.1&gt; bf.add users user3</p>
-</blockquote>
-<pre><code>(integer) 1
-</code></pre></li>
-<li><p>4.2 bf.exists</p>
-<blockquote>
-<p>语法:[bf.exixts key options]<br>127.0.0.1&gt; bf.exists users user3</p>
-</blockquote>
-<pre><code>(integer) 1
-</code></pre></li>
-<li><p>4.3 bf.madd</p>
-<blockquote>
-<p>语法:[bf.madd key …options]<br>127.0.0.1&gt; bf.madd users user4 user5 user6 user7</p>
-</blockquote>
-<pre><code>(integer) 1
-(integer) 1
-(integer) 1
-(integer) 1
-</code></pre></li>
-<li><p>4.4 bf.mexists</p>
-<blockquote>
-<p>语法:[bf.mexists key …options]<br>127.0.0.1&gt; bf.mexists users user4 user5 user6 user7 user8</p>
-</blockquote>
-<pre><code>(integer) 1
-(integer) 1
-(integer) 1
-(integer) 1
-(integer) 0
-</code></pre></li>
-<li><p>4.5 bf.reserve 创建Filter</p>
-<blockquote>
-<p>语法:[bf.reserve key error_rate initial_size]<br>127.0.0.1&gt; bf.reserve books 0.001 10000</p>
-</blockquote>
-<pre><code>ok
-</code></pre></li>
-</ul>
-</li>
-<li><p>5.在golang中的代码的具体实现和运用</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/gomodule/redigo/redis"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(blog *Blog)</span> <span class="title">AddUserLog</span><span class="params">(userId, blogId <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line">	_, err := cache.Do(<span class="string">"BF.ADD"</span>, <span class="string">"user-read-log-"</span>+blogId, userId)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"bloom filer add err"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(blog *Blog)</span> <span class="title">CheckIsRead</span><span class="params">(userId <span class="keyword">string</span>, blogIds []<span class="keyword">string</span>)</span> <span class="params">([]<span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line"></span><br><span class="line">	ints := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">for</span> _, blogId := <span class="keyword">range</span> blogIds &#123;</span><br><span class="line">		args := []<span class="keyword">interface</span>&#123;&#125;&#123;<span class="string">"user-read-log-"</span> + blogId&#125;</span><br><span class="line">		args = <span class="built_in">append</span>(args, userId)</span><br><span class="line">		intExists, err := redis.Int(cache.Do(<span class="string">"bf.exists"</span>, args...))</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">"debug charles intExists error arg"</span>, args)</span><br><span class="line">			intExists = <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		ints = <span class="built_in">append</span>(ints, intExists)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ints, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(blog *Blog)</span> <span class="title">DeleteBlogLogCache</span><span class="params">(blogId <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	cache := app.GetCache()</span><br><span class="line">	<span class="keyword">defer</span> cache.Close()</span><br><span class="line">	_, err := cache.Do(<span class="string">"EXPIRE"</span>, <span class="string">"user-read-log-"</span>+blogId, <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"redis set expire bloom filter and err"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><ol start="6">
-<li>还有一点特别要注意的事项就是, bf只有add和exists两种类似的操作 没有删除操作 如果要是想删除改数据 则使用expire 使该key过期 例如上面演示代码里面提到的DeleteBlogCache函数的用法</li>
-</ol>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/11/redis布隆选择器在去重方面的使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-gorm err不为空和记录未找到" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/11/gorm err不为空和记录未找到/">gorm err不为空和记录未找到的错误区别</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/11/gorm err不为空和记录未找到/" class="archive-article-date">
-  	<time datetime="2019-06-11T08:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="gorm-中err-nil-并不是真的服务器有错误-因为它会把记录未找到也当成是err-并且此时err-nil"><a href="#gorm-中err-nil-并不是真的服务器有错误-因为它会把记录未找到也当成是err-并且此时err-nil" class="headerlink" title="gorm 中err != nil 并不是真的服务器有错误 因为它会把记录未找到也当成是err 并且此时err != nil:"></a>gorm 中err != nil 并不是真的服务器有错误 因为它会把记录未找到也当成是err 并且此时err != nil:</h4><h3 id="对于查找的记录是单个结构体的话-所以我们在处理gorm给我返回的错误的时候-要特别处理一下-例如下面这种处理方式"><a href="#对于查找的记录是单个结构体的话-所以我们在处理gorm给我返回的错误的时候-要特别处理一下-例如下面这种处理方式" class="headerlink" title="对于查找的记录是单个结构体的话 所以我们在处理gorm给我返回的错误的时候 要特别处理一下 例如下面这种处理方式:"></a>对于查找的记录是单个结构体的话 所以我们在处理gorm给我返回的错误的时候 要特别处理一下 例如下面这种处理方式:</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">err == gorm.ErrRecordNotFound &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="对于查找的记录是结构体数组的时候-判断记录是否为空的时候-则要采取另外一种判断-因为没有记录-并不会报错"><a href="#对于查找的记录是结构体数组的时候-判断记录是否为空的时候-则要采取另外一种判断-因为没有记录-并不会报错" class="headerlink" title="对于查找的记录是结构体数组的时候 判断记录是否为空的时候 则要采取另外一种判断 因为没有记录 并不会报错:"></a>对于查找的记录是结构体数组的时候 判断记录是否为空的时候 则要采取另外一种判断 因为没有记录 并不会报错:</h3><blockquote>
-<p>此时我们就只需要判断给我们返回的结构体数组的长度是否是0 来判断是否有查找到记录的 特别要注意这两种情况的判断</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng gorm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/11/gorm err不为空和记录未找到/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 

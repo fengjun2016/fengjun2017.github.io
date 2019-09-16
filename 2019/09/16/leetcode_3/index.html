@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>etcd在mac系统中的安装与使用 | Hexo</title>
+  <title>golang leetcode刷题-07 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="etcd在mac系统中的安装与使用 进入etcd官网提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包 解压下载好的代码包 cd 进入解压后的代码包 启动server端 nohup ./etcd –listen-client-urls ‘http://0.0.0.0:2379&amp;#39; –advertise-client-urls ‘http://0">
-<meta name="keywords" content="goalng etcd mac">
+  <meta name="description" content="leetcode 刷题 07 题目描述 golang实现 解题思路总结  题目描述 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。  示例 1: 输入: 123输出: 321 示例 2: 输入: -123输出: -321示例 3: 输入: 120输出: 21注意: 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这">
+<meta name="keywords" content="golang leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="etcd在mac系统中的安装与使用">
-<meta property="og:url" content="http://yoursite.com/2019/05/06/golang mac etcd安装与使用/index.html">
+<meta property="og:title" content="golang leetcode刷题-07">
+<meta property="og:url" content="http://yoursite.com/2019/09/16/leetcode_3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="etcd在mac系统中的安装与使用 进入etcd官网提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包 解压下载好的代码包 cd 进入解压后的代码包 启动server端 nohup ./etcd –listen-client-urls ‘http://0.0.0.0:2379&amp;#39; –advertise-client-urls ‘http://0">
+<meta property="og:description" content="leetcode 刷题 07 题目描述 golang实现 解题思路总结  题目描述 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。  示例 1: 输入: 123输出: 321 示例 2: 输入: -123输出: -321示例 3: 输入: 120输出: 21注意: 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-06T07:50:25.395Z">
+<meta property="og:updated_time" content="2019-09-16T10:08:19.772Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="etcd在mac系统中的安装与使用">
-<meta name="twitter:description" content="etcd在mac系统中的安装与使用 进入etcd官网提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包 解压下载好的代码包 cd 进入解压后的代码包 启动server端 nohup ./etcd –listen-client-urls ‘http://0.0.0.0:2379&amp;#39; –advertise-client-urls ‘http://0">
+<meta name="twitter:title" content="golang leetcode刷题-07">
+<meta name="twitter:description" content="leetcode 刷题 07 题目描述 golang实现 解题思路总结  题目描述 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。  示例 1: 输入: 123输出: 321 示例 2: 输入: -123输出: -321示例 3: 输入: 120输出: 21注意: 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -147,74 +147,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-golang mac etcd安装与使用" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-leetcode_3" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      etcd在mac系统中的安装与使用
+      golang leetcode刷题-07
     </h1>
   
 
         
-        <a href="/2019/05/06/golang mac etcd安装与使用/" class="archive-article-date">
-  	<time datetime="2019-05-06T07:41:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/09/16/leetcode_3/" class="archive-article-date">
+  	<time datetime="2019-09-16T10:20:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="etcd在mac系统中的安装与使用"><a href="#etcd在mac系统中的安装与使用" class="headerlink" title="etcd在mac系统中的安装与使用"></a>etcd在mac系统中的安装与使用</h3><ul>
-<li>进入<a href="https://coreos.com/etcd/" target="_blank" rel="noopener">etcd官网</a>提供的连接， 点击GitHub Project, 然后选择release版本下载编译好的版本代码包</li>
-<li>解压下载好的代码包</li>
-<li>cd 进入解压后的代码包</li>
-<li>启动server端 nohup ./etcd –listen-client-urls ‘<a href="http://0.0.0.0:2379&#39;" target="_blank" rel="noopener">http://0.0.0.0:2379&#39;</a> –advertise-client-urls ‘<a href="http://0.0.0.0:2379&#39;" target="_blank" rel="noopener">http://0.0.0.0:2379&#39;</a> &amp;</li>
-<li>client客户端连接使用 </li>
-<li>ETCDCTL_API=3 ./etcdctl put “name” “fengjun”</li>
-<li>ETCDCTL_API=3 ./etcdctl get “name”</li>
+        <h2 id="leetcode-刷题-07"><a href="#leetcode-刷题-07" class="headerlink" title="leetcode 刷题 07"></a>leetcode 刷题 07</h2><ul>
+<li>题目描述</li>
+<li>golang实现</li>
+<li>解题思路总结</li>
 </ul>
-<h4 id="etcd特性总结"><a href="#etcd特性总结" class="headerlink" title="etcd特性总结"></a>etcd特性总结</h4><ul>
-<li>对于key前缀相同的有序排列存储在系统中</li>
-</ul>
-<blockquote>
-<p>例如:</p>
-<ul>
-<li>ETCDCTL_API=3 ./etcdctl put “/cron/jobs/job1” “{…job1}”<ul>
-<li>ETCDCTL_API=3 ./etcdctl put “/cron/jobs/job2” “{…job2}”</li>
-</ul>
-</li>
-</ul>
+<h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><blockquote>
+<p>给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。</p>
 </blockquote>
-<ul>
-<li><p>然后可以按照key前缀设置来查找集合</p>
-<blockquote>
-<p>ETCDCTL_API=3 ./etcdctl get “/cron/jobs/“ –prefix</p>
-<ul>
-<li>/cron/jobs/job1</li>
-<li>{…job1}</li>
-<li>/cron/jobs/job2</li>
-<li>{…job2}</li>
-</ul>
+<p>示例 1:</p>
+<p>输入: 123<br>输出: 321<br> 示例 2:</p>
+<p>输入: -123<br>输出: -321<br>示例 3:</p>
+<p>输入: 120<br>输出: 21<br>注意:</p>
+<p>假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。</p>
+<h6 id="golang-实现"><a href="#golang-实现" class="headerlink" title="golang 实现"></a>golang 实现</h6><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reverse</span><span class="params">(x <span class="keyword">int</span>)</span> <span class="params">(num <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> x != <span class="number">0</span> &#123;</span><br><span class="line">        num = num * <span class="number">10</span>  + x % <span class="number">10</span></span><br><span class="line">        x = x/<span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    MaxInt32 := <span class="number">1</span>&lt;&lt;<span class="number">31</span> - <span class="number">1</span></span><br><span class="line">    MinInt32 := <span class="number">-1</span> &lt;&lt; <span class="number">31</span></span><br><span class="line">    <span class="keyword">if</span> num &gt; MaxInt32 || num &lt; MinInt32 &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="golang踩坑"><a href="#golang踩坑" class="headerlink" title="golang踩坑"></a>golang踩坑</h6><blockquote>
+<p>无</p>
 </blockquote>
-</li>
-<li><p>在新开的终端会话界面使用watch命令检测 进入解压后的文件夹中</p>
-<blockquote>
-<p>ETCDCTL_API=3 ./etcdctl watch “/cron/jobs/“ –prefix</p>
-<ul>
-<li>ETCDCTL_API=3 ./etcdctl put “/cron/jobs/job2” “{…1111}” //修改</li>
-<li>新开的终端会显示:<br>PUT<br>/cron/jobs/job2<br>{…1111}</li>
-</ul>
-</blockquote>
-</li>
-<li><p>获取etcd golang客户端的代码 在上面打开的etcd<a href="https://github.com/etcd-io/etcd" target="_blank" rel="noopener">github项目代码</a>里面 <a href="https://github.com/etcd-io/etcd/tree/master/clientv3" target="_blank" rel="noopener">clientv3</a></p>
-<blockquote>
-<p>etcd/clientv3 is the official Go etcd client for v3.<br>  golang安装客户端代码方式<br>  Install<br>  go get github.com/coreos/etcd/client  //或者使用gopm工具 或者进入golang中国下载该包 然后入项目中</p>
-</blockquote>
-</li>
-</ul>
 
       
 
@@ -249,7 +218,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">goalng etcd mac</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">golang leetcode</a>
         		</li>
       		
 		</ul>
@@ -305,7 +274,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/05/06/golang mac etcd安装与使用/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/09/16/leetcode_3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -319,18 +288,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/06/golang nsq/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          golang nsq实时消息处理系统源码解读一一基本介绍
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/05/06/golang string/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">golang 字符串处理</div>
+    <a href="/2019/09/16/leetcode_2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">golang leetcode刷题-02</div>
       <i class="icon-circle-right"></i>
     </a>
   
