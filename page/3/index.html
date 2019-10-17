@@ -144,6 +144,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-golang字符串时间戳转换成time.Time类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/06/golang字符串时间戳转换成time.Time类型/">golang字符串时间戳转换成time.Time类型</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/06/golang字符串时间戳转换成time.Time类型/" class="archive-article-date">
+  	<time datetime="2019-05-06T07:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="时间转换的原理是"><a href="#时间转换的原理是" class="headerlink" title="时间转换的原理是:"></a>时间转换的原理是:</h4><blockquote>
+<p>将原先的字符串时间戳转换为int64位, 再使用time.Unix(v, 0)转换成time类型的时间戳</p>
+</blockquote>
+<h4 id="需要相关使用的函数有"><a href="#需要相关使用的函数有" class="headerlink" title="需要相关使用的函数有:"></a>需要相关使用的函数有:</h4><ul>
+<li>unix64, _ := strconv.ParseInt(unixStr, 10, 64)</li>
+<li>time.Unix(v, 0)</li>
+</ul>
+<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例:"></a>代码示例:</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> startTime time.Time</span><br><span class="line">startTimeInt64, _ := strconv.ParseInt(start, <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">startTime = time.Unix(startTimeInt64, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">goalng</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/06/golang字符串时间戳转换成time.Time类型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-golang字符串处理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
