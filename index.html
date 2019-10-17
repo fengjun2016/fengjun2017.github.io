@@ -151,7 +151,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/17/分布式对象存储-go实现/">分布式对象存储-go实现(01)</a>
+      <a class="article-title" href="/2019/10/17/分布式对象存储-go实现/">分布式对象存储-go实现-01(整体原理架构)</a>
     </h1>
   
 
@@ -164,44 +164,62 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="分布式对象存储-架构以及原理划分"><a href="#分布式对象存储-架构以及原理划分" class="headerlink" title="分布式对象存储 架构以及原理划分"></a>分布式对象存储 架构以及原理划分</h4><p><a href="https://postimg.cc/bs79xrP1" target="_blank" rel="noopener"><img src="https://i.postimg.cc/8z5XVfnX/image.png" alt="image.png"></a></p>
-<h5 id="linux系统gocv官方文档地址"><a href="#linux系统gocv官方文档地址" class="headerlink" title="linux系统gocv官方文档地址"></a><a href="https://gocv.io/getting-started/linux/" target="_blank" rel="noopener">linux系统gocv官方文档地址</a></h5><h5 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h5><ul>
-<li><p>安装GoCv包 install the GoCv package</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u -d gocv.io/x/GoCv</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进入GoCv包目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/gocv.io/x/gocv</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>quick install 使用包下面的makefile</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果上面的命令能够正常正确的执行 就应该会显示下面的信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gocv version: 0.21.0</span><br><span class="line">opencv lib version: 4.1.2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>校验安装是否正常的命令操作</p>
-<blockquote>
-<p> 相关命令操作</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/gocv.io/x/gocv</span><br></pre></td></tr></table></figure>
-</code></pre></blockquote>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run ./cmd/version/main.go</span><br></pre></td></tr></table></figure>
-
-如果显示下面的文字 则是正常的
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   gocv version: 0.21.0</span><br><span class="line">opencv lib version: 4.1.2</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-<li><p>安装成功了<a href="https://postimg.cc/Hrq9g60g" target="_blank" rel="noopener">gocv.png</a></p>
-</li>
-</ul>
-<h5 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h5><ul>
-<li><p>go get -u -d gocv.io/x/gocv</p>
-<blockquote>
-<p>执行完这句话 虽然没有报错 但是目录也没有在我的gopath里面生成  </p>
+        <h4 id="什么是分布式系统"><a href="#什么是分布式系统" class="headerlink" title="什么是分布式系统"></a>什么是分布式系统</h4><blockquote>
+<p>一个分布式系统要求各节点分布在网络上,并通过消息传递来合作完成一个共同的目标.<br>    分布式系统的三大关键特征是: 节点之间并发工作,没有全局锁以及某个节点上发生的错误不会<br>    影响其他节点.  </p>
 </blockquote>
-<p>想到解决办法是使用 先在gopath/src 下面创建gocv.io/x/gocv目录  </p>
-<p>然后cd $GOPATH/src/gocv.io/x/  </p>
-<p>然后执行 git clone <a href="https://github.com/hybridgroup/gocv.git" target="_blank" rel="noopener">https://github.com/hybridgroup/gocv.git</a></p>
-</li>
-</ul>
-<h5 id="然后开始golang-的-opencv-图像处理之旅吧"><a href="#然后开始golang-的-opencv-图像处理之旅吧" class="headerlink" title="然后开始golang 的 opencv 图像处理之旅吧"></a>然后开始golang 的 opencv 图像处理之旅吧</h5>
+<pre><code>分布式系统的好处在于可扩展性,只需要加入新的节点就可以自由扩展集群的性能.  
+
+我们都知道单机版的对象存储原型, 它的接口和数据存储是被紧密耦合在一起的,这样的系统不是分布式,也无法扩展.
+
+所以分布式系统就必须解开这个耦合, 让接口和数据存储成为互相独立的服务节点,两者互相合作提供对象存储服务.  
+
+一旦接口和数据存储分离,我们就可以往集群中随意添加新的接口服务节点或者数据服务节点.  
+
+而且,更值得注意的是,这些节点可以在同一台服务器上共存,也可以分布在不同服务器上,   
+
+也就是说,我们的架构真正摆脱了对单一服务器的依赖,成为了一个分布式服务集群.
+</code></pre><h4 id="分布式对象存储-架构以及原理架构图划分-接口和数据存储分离的架构"><a href="#分布式对象存储-架构以及原理架构图划分-接口和数据存储分离的架构" class="headerlink" title="分布式对象存储 架构以及原理架构图划分 接口和数据存储分离的架构"></a>分布式对象存储 架构以及原理架构图划分 接口和数据存储分离的架构</h4><p><a href="https://postimg.cc/bs79xrP1" target="_blank" rel="noopener"><img src="https://i.postimg.cc/8z5XVfnX/image.png" alt="image.png"></a></p>
+<blockquote>
+<p>如上图所示:<br>    接口服务层提供了对外的REST接口,而数据服务层则提供数据的存储功能.  </p>
+</blockquote>
+<pre><code>接口服务处理客户端的请求,然后向数据服务存储对象, 数据服务处理来自接口服务的请求  
+
+接口服务和数据服务之间的接口有两种,第一种接口实现对象的存取.和单机版本的一样, 对象的存取使用REST接口. 也就是说数据服务本身也提供REST接口,此时,接口服务节点作为HTTP客户端向数据服务请求对象.  
+
+第二种接口通过RabbitMq消息队列进行通信.在我门这个接口服务和数据存储服务分离的架构中对RabbitMQ的使用分为两种模式,一种模式是向某个exchange进行一对多的消息群发,另外一种模式则是向某个消息队列进行一对一的消息单发.
+
+每一个数据服务节点都需要向所有的接口服务节点通知自身的存在,为此,我们创建了一个名为apiServer的exchange,每一台数据服务节点都会持续向这个exchange发送心跳消息.所有的接口服务节点在启动以后都会创建一个消息队列来绑定这个exchange,任何发往这个excahneg的消息都会被转发给绑定它的所有消息队列,也就是说每一个几口服务节点都会收到任意一台数据服务节点的心跳消息
+
+另外,接口服务需要在收到对象GET请求时定位该对象被保存在哪个数据服务节点上,所以我们还需要创建一个名为dataServers的exchange.所有的数据服务节点绑定这个exchange并接受来自接口服务的定位消息.拥有该对象的数据服务节点则使用消息单发通知该接口服务节点.
+
+之所以必须使用REST和消息队列这两种不同类型的接口是为了满足不同的需求,对象存取的特点是数据量有可能很大,不适合讲一个巨大的对象通过消息队列传输,而REST接口虽然能够处理大数据传输,但是对于群发却显得力不从心.
+
+需要说明的是,虽然我们需要两种不同类型的接口,但是不一定要选用REST和RabbitMQ.我们可以直接用TCP协议来传输对象;消息队列也有很多种,例如ACTiveMQ或者ZeroMQ甚至我们可以用UDP协议来实现自己的消息群发.选择有很多,在这里我们使用REST和RabbitMQ是因为他们都已经具备了成熟的Go语言库,实现起来比较容易.而且Ubuntu上自带RabbitMQ安装包,安装和调试都非常方便.
+</code></pre><h4 id="RabbitMq消息设计"><a href="#RabbitMq消息设计" class="headerlink" title="RabbitMq消息设计"></a>RabbitMq消息设计</h4><h6 id="心跳消息架构定义设计"><a href="#心跳消息架构定义设计" class="headerlink" title="心跳消息架构定义设计"></a>心跳消息架构定义设计</h6><blockquote>
+<p>数据服务需要通过RabbitMQ将自身的存在通知给所有的接口服务,这样的消息被称为心跳消息 见下图</p>
+</blockquote>
+<p><a href="https://postimg.cc/CdNmKTQC" target="_blank" rel="noopener"><img src="https://i.postimg.cc/L6d7NmkW/1.png" alt="1.png"></a></p>
+<blockquote>
+<p>apiServers和dataServers这两个exchange需要在rabbitMQ服务器上预先创建.</p>
+</blockquote>
+<pre><code>每个接口服务节点在启动之后都会创建自己的消息队列并绑定到apiServers exchange.每个数据服务节点在启动后会每隔5秒钟就会发送一条消息给apiServers exchange,
+
+消息的正文就是该服务节点的HTTP监听地址.
+
+接口服务节点在收到该消息后就会记录这个地址
+</code></pre><h6 id="定位对象流程架构定义设计"><a href="#定位对象流程架构定义设计" class="headerlink" title="定位对象流程架构定义设计"></a>定位对象流程架构定义设计</h6><blockquote>
+<p>定位数据对象时候的流程如下图:</p>
+</blockquote>
+<p><a href="https://postimg.cc/nj1JhFgb" target="_blank" rel="noopener"><img src="https://i.postimg.cc/50hNpjm0/locate-1.png" alt="locate-1.png"></a></p>
+<blockquote>
+<p>每个数据服务节点在启动时都必须创建自己的消息队列并且绑定至dataServers exchange.</p>
+</blockquote>
+<pre><code>当接口服务需要定位时,会创建一个临时消息队列,然后发送一条消息给dataServers exchange,消息的正文是需要定位的对象,返回地址是该临时队列的名字.成功丁文的数据服务节点要将  
+
+反馈消息发送给这个临时队列,反馈消息的正文是该数据服务节点自身的监听地址
+
+临时消息队列会在一定时间后关闭,如果在关闭前没有收到任何反馈该对象定位失败,接口服务节点就会知道该对象不存在于数据服务层里面.
+</code></pre>
       
 
       
